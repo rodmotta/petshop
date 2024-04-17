@@ -1,4 +1,6 @@
 package com.github.rodmotta.petshopproduct.presentation.dto.response;
 
-public class SubCategoryResponse {
+import java.util.UUID;
+
+public record SubCategoryResponse(UUID id, String name) {
 }

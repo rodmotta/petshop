@@ -4,13 +4,15 @@ import com.github.rodmotta.petshopproduct.model.entities.Product;
 import com.github.rodmotta.petshopproduct.model.usecases.ProductUseCase;
 import com.github.rodmotta.petshopproduct.presentation.dto.request.CreateProductRequest;
 import com.github.rodmotta.petshopproduct.presentation.dto.request.UpdateProductRequest;
+import com.github.rodmotta.petshopproduct.presentation.dto.response.PageResponse;
+import com.github.rodmotta.petshopproduct.presentation.dto.response.ProductResponse;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 import static com.github.rodmotta.petshopproduct.presentation.dto.mapper.ProductMapper.converter;
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("product/api")
@@ -19,6 +21,20 @@ public class ProductController {
 
     public ProductController(ProductUseCase productUseCase) {
         this.productUseCase = productUseCase;
+    }
+
+    @GetMapping("products")
+    @ResponseStatus(OK)
+    public List<ProductResponse> findAll() {
+        List<Product> products = productUseCase.findAll();
+        return converter(products);
+    }
+
+    @GetMapping("product/{productId}")
+    @ResponseStatus(OK)
+    public ProductResponse findProductById(@PathVariable UUID productId) {
+        Product product = productUseCase.findById(productId);
+        return converter(product);
     }
 
     @PostMapping("product")

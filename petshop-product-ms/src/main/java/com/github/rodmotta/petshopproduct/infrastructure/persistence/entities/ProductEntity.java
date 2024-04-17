@@ -16,11 +16,11 @@ public class ProductEntity {
     private String name;
     private String description;
     private BigDecimal price;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private CategoryEntity category;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private SubCategoryEntity subCategory;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private BrandEntity brand;
 
     public ProductEntity(UUID id, String name, String description, BigDecimal price, CategoryEntity category, SubCategoryEntity subCategory, BrandEntity brand) {

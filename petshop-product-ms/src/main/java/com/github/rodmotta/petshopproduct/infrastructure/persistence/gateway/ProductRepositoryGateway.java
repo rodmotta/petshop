@@ -6,6 +6,7 @@ import com.github.rodmotta.petshopproduct.infrastructure.persistence.repositorie
 import com.github.rodmotta.petshopproduct.model.entities.Product;
 import com.github.rodmotta.petshopproduct.model.gateways.ProductGateway;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -17,15 +18,21 @@ public class ProductRepositoryGateway implements ProductGateway {
     }
 
     @Override
-    public void create(Product product) {
-        ProductEntity productEntity = ProductMapper.converter(product);
-        productRepository.save(productEntity);
+    public List<Product> findAll() {
+        List<ProductEntity> products = productRepository.findAll();
+        return ProductMapper.converter(products);
     }
 
     @Override
     public Optional<Product> findById(UUID productId) {
         return productRepository.findById(productId)
                 .map(ProductMapper::converter);
+    }
+
+    @Override
+    public void create(Product product) {
+        ProductEntity productEntity = ProductMapper.converter(product);
+        productRepository.save(productEntity);
     }
 
     @Override

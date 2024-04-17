@@ -6,6 +6,7 @@ import com.github.rodmotta.petshopproduct.model.gateways.CategoryGateway;
 import com.github.rodmotta.petshopproduct.model.gateways.ProductGateway;
 import com.github.rodmotta.petshopproduct.model.gateways.SubCategoryGateway;
 
+import java.util.List;
 import java.util.UUID;
 
 public class ProductUseCase {
@@ -19,6 +20,15 @@ public class ProductUseCase {
         this.categoryGateway = categoryGateway;
         this.subCategoryGateway = subCategoryGateway;
         this.brandGateway = brandGateway;
+    }
+
+    public List<Product> findAll() {
+        return productGateway.findAll();
+    }
+
+    public Product findById(UUID productId) {
+        return productGateway.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found."));
     }
 
     public void create(Product product) {

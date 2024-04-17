@@ -4,11 +4,13 @@ import com.github.rodmotta.petshopproduct.infrastructure.persistence.entities.Br
 import com.github.rodmotta.petshopproduct.infrastructure.persistence.entities.CategoryEntity;
 import com.github.rodmotta.petshopproduct.infrastructure.persistence.entities.ProductEntity;
 import com.github.rodmotta.petshopproduct.infrastructure.persistence.entities.SubCategoryEntity;
+import com.github.rodmotta.petshopproduct.model.entities.Brand;
+import com.github.rodmotta.petshopproduct.model.entities.Category;
 import com.github.rodmotta.petshopproduct.model.entities.Product;
-import com.github.rodmotta.petshopproduct.model.vo.Description;
+import com.github.rodmotta.petshopproduct.model.entities.SubCategory;
 import com.github.rodmotta.petshopproduct.model.vo.Name;
-import com.github.rodmotta.petshopproduct.model.vo.Price;
 
+import java.util.List;
 import java.util.Objects;
 
 public class ProductMapper {
@@ -28,7 +30,25 @@ public class ProductMapper {
     }
 
     public static Product converter(ProductEntity productEntity) {
-        return new Product(productEntity.getId(), new Name(productEntity.getName()), new Description(productEntity.getDescription()),
-                new Price(productEntity.getPrice()), null, null, null);
+        return Product.builder()
+                .id(productEntity.getId())
+                .name(productEntity.getName())
+                .description(productEntity.getDescription())
+                .price(productEntity.getPrice())
+                .category(new Category(productEntity.getCategory().getId(), new Name(productEntity.getCategory().getName())))
+                .subCategory(new SubCategory(productEntity.getSubCategory().getId(), new Name(productEntity.getSubCategory().getName())))
+                .brand(new Brand(productEntity.getBrand().getId(), new Name(productEntity.getBrand().getName())))
+                .build();
+    }
+
+    public static List<Product> converter(List<ProductEntity> products) {
+        return products.stream()
+                .map(product -> Product.builder()
+                        .id(product.getId())
+                        .name(product.getName())
+                        .description(product.getDescription())
+                        .price(product.getPrice())
+                        .build())
+                .toList();
     }
 }

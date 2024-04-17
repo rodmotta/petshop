@@ -4,6 +4,7 @@ import com.github.rodmotta.petshopproduct.model.vo.Description;
 import com.github.rodmotta.petshopproduct.model.vo.Name;
 import com.github.rodmotta.petshopproduct.model.vo.Price;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 public class Product {
@@ -15,23 +16,7 @@ public class Product {
     private SubCategory subCategory;
     private Brand brand;
 
-    public Product(Name name, Description description, Price price, Category category, SubCategory subCategory, Brand brand) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.category = category;
-        this.subCategory = subCategory;
-        this.brand = brand;
-    }
-
-    public Product(UUID id, Name name, Description description, Price price, Category category, SubCategory subCategory, Brand brand) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.category = category;
-        this.subCategory = subCategory;
-        this.brand = brand;
+    public Product() {
     }
 
     public UUID getId() {
@@ -88,5 +73,57 @@ public class Product {
 
     public void setBrand(Brand brand) {
         this.brand = brand;
+    }
+
+    public static ProductBuilder builder() {
+        Product car = new Product();
+        return new ProductBuilder(car);
+    }
+
+    public static class ProductBuilder {
+        private final Product product;
+
+        public ProductBuilder(Product product) {
+            this.product = product;
+        }
+
+        public ProductBuilder id(UUID id) {
+            product.setId(id);
+            return this;
+        }
+
+        public ProductBuilder name(String name) {
+            product.setName(new Name(name));
+            return this;
+        }
+
+        public ProductBuilder description(String description) {
+            product.setDescription(new Description(description));
+            return this;
+        }
+
+        public ProductBuilder price(BigDecimal price) {
+            product.setPrice(new Price(price));
+            return this;
+        }
+
+        public ProductBuilder category(Category category) {
+            product.setCategory(category);
+            return this;
+        }
+
+        public ProductBuilder subCategory(SubCategory subCategory) {
+            product.setSubCategory(subCategory);
+            return this;
+        }
+
+        public ProductBuilder brand(Brand brand) {
+            product.setBrand(brand);
+            return this;
+        }
+
+        public Product build() {
+            return product;
+        }
     }
 }
