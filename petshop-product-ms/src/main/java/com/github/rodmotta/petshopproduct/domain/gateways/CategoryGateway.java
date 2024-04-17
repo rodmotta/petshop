@@ -1,6 +1,6 @@
-package com.github.rodmotta.petshopproduct.model.gateways;
+package com.github.rodmotta.petshopproduct.domain.gateways;
 
-import com.github.rodmotta.petshopproduct.model.entities.Category;
+import com.github.rodmotta.petshopproduct.domain.model.Category;
 
 import java.util.Optional;
 import java.util.UUID;

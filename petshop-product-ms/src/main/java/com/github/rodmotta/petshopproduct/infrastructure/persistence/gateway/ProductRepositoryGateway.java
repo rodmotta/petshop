@@ -3,8 +3,8 @@ package com.github.rodmotta.petshopproduct.infrastructure.persistence.gateway;
 import com.github.rodmotta.petshopproduct.infrastructure.persistence.entities.ProductEntity;
 import com.github.rodmotta.petshopproduct.infrastructure.persistence.mapper.ProductMapper;
 import com.github.rodmotta.petshopproduct.infrastructure.persistence.repositories.ProductRepository;
-import com.github.rodmotta.petshopproduct.model.entities.Product;
-import com.github.rodmotta.petshopproduct.model.gateways.ProductGateway;
+import com.github.rodmotta.petshopproduct.domain.model.Product;
+import com.github.rodmotta.petshopproduct.domain.gateways.ProductGateway;
 
 import java.util.List;
 import java.util.Optional;

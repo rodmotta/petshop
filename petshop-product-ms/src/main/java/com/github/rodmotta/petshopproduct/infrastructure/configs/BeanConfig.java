@@ -8,11 +8,11 @@ import com.github.rodmotta.petshopproduct.infrastructure.persistence.repositorie
 import com.github.rodmotta.petshopproduct.infrastructure.persistence.repositories.CategoryRepository;
 import com.github.rodmotta.petshopproduct.infrastructure.persistence.repositories.ProductRepository;
 import com.github.rodmotta.petshopproduct.infrastructure.persistence.repositories.SubCategoryRepository;
-import com.github.rodmotta.petshopproduct.model.gateways.BrandGateway;
-import com.github.rodmotta.petshopproduct.model.gateways.CategoryGateway;
-import com.github.rodmotta.petshopproduct.model.gateways.ProductGateway;
-import com.github.rodmotta.petshopproduct.model.gateways.SubCategoryGateway;
-import com.github.rodmotta.petshopproduct.model.usecases.ProductUseCase;
+import com.github.rodmotta.petshopproduct.domain.gateways.BrandGateway;
+import com.github.rodmotta.petshopproduct.domain.gateways.CategoryGateway;
+import com.github.rodmotta.petshopproduct.domain.gateways.ProductGateway;
+import com.github.rodmotta.petshopproduct.domain.gateways.SubCategoryGateway;
+import com.github.rodmotta.petshopproduct.domain.usecases.ProductUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 

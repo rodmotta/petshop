@@ -1,13 +1,9 @@
 package com.github.rodmotta.petshopproduct.infrastructure.persistence.gateway;
 
 import com.github.rodmotta.petshopproduct.infrastructure.persistence.mapper.BrandMapper;
-import com.github.rodmotta.petshopproduct.infrastructure.persistence.mapper.CategoryMapper;
 import com.github.rodmotta.petshopproduct.infrastructure.persistence.repositories.BrandRepository;
-import com.github.rodmotta.petshopproduct.infrastructure.persistence.repositories.CategoryRepository;
-import com.github.rodmotta.petshopproduct.model.entities.Brand;
-import com.github.rodmotta.petshopproduct.model.entities.Category;
-import com.github.rodmotta.petshopproduct.model.gateways.BrandGateway;
-import com.github.rodmotta.petshopproduct.model.gateways.CategoryGateway;
+import com.github.rodmotta.petshopproduct.domain.model.Brand;
+import com.github.rodmotta.petshopproduct.domain.gateways.BrandGateway;
 
 import java.util.Optional;
 import java.util.UUID;

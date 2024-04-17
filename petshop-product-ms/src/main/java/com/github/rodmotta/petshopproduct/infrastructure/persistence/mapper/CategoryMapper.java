@@ -1,8 +1,8 @@
 package com.github.rodmotta.petshopproduct.infrastructure.persistence.mapper;
 
 import com.github.rodmotta.petshopproduct.infrastructure.persistence.entities.CategoryEntity;
-import com.github.rodmotta.petshopproduct.model.entities.Category;
-import com.github.rodmotta.petshopproduct.model.vo.Name;
+import com.github.rodmotta.petshopproduct.domain.model.Category;
+import com.github.rodmotta.petshopproduct.domain.vo.Name;
 
 import java.util.Objects;
 

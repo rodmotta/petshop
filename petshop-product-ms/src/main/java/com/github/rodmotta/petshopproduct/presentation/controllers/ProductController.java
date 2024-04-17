@@ -1,10 +1,9 @@
 package com.github.rodmotta.petshopproduct.presentation.controllers;
 
-import com.github.rodmotta.petshopproduct.model.entities.Product;
-import com.github.rodmotta.petshopproduct.model.usecases.ProductUseCase;
+import com.github.rodmotta.petshopproduct.domain.model.Product;
+import com.github.rodmotta.petshopproduct.domain.usecases.ProductUseCase;
 import com.github.rodmotta.petshopproduct.presentation.dto.request.CreateProductRequest;
 import com.github.rodmotta.petshopproduct.presentation.dto.request.UpdateProductRequest;
-import com.github.rodmotta.petshopproduct.presentation.dto.response.PageResponse;
 import com.github.rodmotta.petshopproduct.presentation.dto.response.ProductResponse;
 import org.springframework.web.bind.annotation.*;
 

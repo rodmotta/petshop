@@ -1,20 +1,20 @@
-package com.github.rodmotta.petshopproduct.model.entities;
+package com.github.rodmotta.petshopproduct.domain.model;
 
-import com.github.rodmotta.petshopproduct.model.vo.Name;
+import com.github.rodmotta.petshopproduct.domain.vo.Name;
 
 import java.util.UUID;
 
-public class Brand {
+public class SubCategory {
     private UUID id;
     private Name name;
 
-    public Brand(UUID id, Name name) {
+    public SubCategory(UUID id) {
         this.id = id;
-        this.name = name;
     }
 
-    public Brand(UUID id) {
+    public SubCategory(UUID id, Name name) {
         this.id = id;
+        this.name = name;
     }
 
     public UUID getId() {

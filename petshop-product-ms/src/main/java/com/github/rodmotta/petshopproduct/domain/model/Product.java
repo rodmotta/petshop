@@ -1,8 +1,8 @@
-package com.github.rodmotta.petshopproduct.model.entities;
+package com.github.rodmotta.petshopproduct.domain.model;
 
-import com.github.rodmotta.petshopproduct.model.vo.Description;
-import com.github.rodmotta.petshopproduct.model.vo.Name;
-import com.github.rodmotta.petshopproduct.model.vo.Price;
+import com.github.rodmotta.petshopproduct.domain.vo.Description;
+import com.github.rodmotta.petshopproduct.domain.vo.Name;
+import com.github.rodmotta.petshopproduct.domain.vo.Price;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -76,16 +76,10 @@ public class Product {
     }
 
     public static ProductBuilder builder() {
-        Product car = new Product();
-        return new ProductBuilder(car);
+        return new ProductBuilder(new Product());
     }
 
-    public static class ProductBuilder {
-        private final Product product;
-
-        public ProductBuilder(Product product) {
-            this.product = product;
-        }
+    public record ProductBuilder(Product product) {
 
         public ProductBuilder id(UUID id) {
             product.setId(id);

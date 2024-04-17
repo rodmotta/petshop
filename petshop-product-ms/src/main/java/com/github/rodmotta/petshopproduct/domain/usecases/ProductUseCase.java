@@ -1,10 +1,11 @@
-package com.github.rodmotta.petshopproduct.model.usecases;
+package com.github.rodmotta.petshopproduct.domain.usecases;
 
-import com.github.rodmotta.petshopproduct.model.entities.Product;
-import com.github.rodmotta.petshopproduct.model.gateways.BrandGateway;
-import com.github.rodmotta.petshopproduct.model.gateways.CategoryGateway;
-import com.github.rodmotta.petshopproduct.model.gateways.ProductGateway;
-import com.github.rodmotta.petshopproduct.model.gateways.SubCategoryGateway;
+import com.github.rodmotta.petshopproduct.domain.exceptions.NotFoundException;
+import com.github.rodmotta.petshopproduct.domain.model.Product;
+import com.github.rodmotta.petshopproduct.domain.gateways.BrandGateway;
+import com.github.rodmotta.petshopproduct.domain.gateways.CategoryGateway;
+import com.github.rodmotta.petshopproduct.domain.gateways.ProductGateway;
+import com.github.rodmotta.petshopproduct.domain.gateways.SubCategoryGateway;
 
 import java.util.List;
 import java.util.UUID;
@@ -28,41 +29,41 @@ public class ProductUseCase {
 
     public Product findById(UUID productId) {
         return productGateway.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product not found."));
+                .orElseThrow(() -> new NotFoundException("Product not found."));
     }
 
     public void create(Product product) {
         brandGateway.findById(product.getBrand().getId())
-                .orElseThrow(() -> new RuntimeException("Brand not found"));
+                .orElseThrow(() -> new NotFoundException("Brand not found"));
 
         categoryGateway.findById(product.getCategory().getId())
-                .orElseThrow(() -> new RuntimeException("Category not found"));
+                .orElseThrow(() -> new NotFoundException("Category not found"));
 
         subCategoryGateway.findById(product.getSubCategory().getId())
-                .orElseThrow(() -> new RuntimeException("Sub-category not found"));
+                .orElseThrow(() -> new NotFoundException("Sub-category not found"));
 
         productGateway.create(product);
     }
 
     public void update(Product product) {
         productGateway.findById(product.getId())
-                .orElseThrow(() -> new RuntimeException("Product not found."));
+                .orElseThrow(() -> new NotFoundException("Product not found."));
 
         brandGateway.findById(product.getBrand().getId())
-                .orElseThrow(() -> new RuntimeException("Brand not found"));
+                .orElseThrow(() -> new NotFoundException("Brand not found"));
 
         categoryGateway.findById(product.getCategory().getId())
-                .orElseThrow(() -> new RuntimeException("Category not found"));
+                .orElseThrow(() -> new NotFoundException("Category not found"));
 
         subCategoryGateway.findById(product.getSubCategory().getId())
-                .orElseThrow(() -> new RuntimeException("Sub-category not found"));
+                .orElseThrow(() -> new NotFoundException("Sub-category not found"));
 
         productGateway.update(product);
     }
 
     public void deleteById(UUID productId) {
         productGateway.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product not found."));
+                .orElseThrow(() -> new NotFoundException("Product not found."));
 
         productGateway.delete(productId);
     }

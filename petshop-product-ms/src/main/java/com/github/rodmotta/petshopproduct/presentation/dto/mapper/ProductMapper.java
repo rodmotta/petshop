@@ -1,9 +1,9 @@
 package com.github.rodmotta.petshopproduct.presentation.dto.mapper;
 
-import com.github.rodmotta.petshopproduct.model.entities.Brand;
-import com.github.rodmotta.petshopproduct.model.entities.Category;
-import com.github.rodmotta.petshopproduct.model.entities.Product;
-import com.github.rodmotta.petshopproduct.model.entities.SubCategory;
+import com.github.rodmotta.petshopproduct.domain.model.Brand;
+import com.github.rodmotta.petshopproduct.domain.model.Category;
+import com.github.rodmotta.petshopproduct.domain.model.Product;
+import com.github.rodmotta.petshopproduct.domain.model.SubCategory;
 import com.github.rodmotta.petshopproduct.presentation.dto.request.CreateProductRequest;
 import com.github.rodmotta.petshopproduct.presentation.dto.request.UpdateProductRequest;
 import com.github.rodmotta.petshopproduct.presentation.dto.response.BrandResponse;

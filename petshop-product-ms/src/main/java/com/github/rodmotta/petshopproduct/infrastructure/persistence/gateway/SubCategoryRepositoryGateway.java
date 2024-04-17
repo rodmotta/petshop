@@ -2,8 +2,8 @@ package com.github.rodmotta.petshopproduct.infrastructure.persistence.gateway;
 
 import com.github.rodmotta.petshopproduct.infrastructure.persistence.mapper.SubCategoryMapper;
 import com.github.rodmotta.petshopproduct.infrastructure.persistence.repositories.SubCategoryRepository;
-import com.github.rodmotta.petshopproduct.model.entities.SubCategory;
-import com.github.rodmotta.petshopproduct.model.gateways.SubCategoryGateway;
+import com.github.rodmotta.petshopproduct.domain.model.SubCategory;
+import com.github.rodmotta.petshopproduct.domain.gateways.SubCategoryGateway;
 
 import java.util.Optional;
 import java.util.UUID;
