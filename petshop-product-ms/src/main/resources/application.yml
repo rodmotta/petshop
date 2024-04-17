@@ -1,0 +1,17 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: petshop-product-ms
+  datasource:
+    url: jdbc:postgresql://localhost:5432/petshop
+    username: admin
+    password: admin
+  jpa:
+    hibernate:
+      ddl-auto: update # create-drop | validate | none | create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
