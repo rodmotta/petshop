@@ -1,0 +1,28 @@
+server:
+  port: 8000
+spring:
+  application:
+    name: petshop-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: petshop-product
+          uri: http://localhost:8082
+          predicates:
+            - Path=/product/api/product/{productId}
+            - Method=GET, DELETE
+          filters:
+            - SetPath=/product/{productId}
+        - id: petshop-product-post-put
+          uri: http://localhost:8082
+          predicates:
+            - Path=/product/api/product
+            - Method=POST, PUT
+          filters:
+            - SetPath=/product
+        - id: petshop-products
+          uri: http://localhost:8082
+          predicates:
+            - Path=/product/api/products
+          filters:
+            - SetPath=/products
