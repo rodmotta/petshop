@@ -5,6 +5,8 @@ import com.github.rodmotta.petshopproduct.domain.usecases.ProductUseCase;
 import com.github.rodmotta.petshopproduct.presentation.dto.request.CreateProductRequest;
 import com.github.rodmotta.petshopproduct.presentation.dto.request.UpdateProductRequest;
 import com.github.rodmotta.petshopproduct.presentation.dto.response.ProductResponse;
+import jakarta.annotation.security.PermitAll;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,7 +16,6 @@ import static com.github.rodmotta.petshopproduct.presentation.dto.mapper.Product
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
-@RequestMapping("product/api")
 public class ProductController {
     private final ProductUseCase productUseCase;
 
