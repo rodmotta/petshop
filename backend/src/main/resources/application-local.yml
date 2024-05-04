@@ -16,6 +16,11 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8080/realms/
+authentication-server:
+  url: http://localhost:8080
+  realm: petshop
+  client_id: petshop-client
+  client_secret: aT9ZtEHlqKSfA6aAQR68YvJ3oCjTvZjj
 logging:
   level:
     org:
