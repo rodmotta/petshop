@@ -1,4 +1,4 @@
-package com.github.rodmotta.petshop.configs;
+package com.github.rodmotta.petshop.commons.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

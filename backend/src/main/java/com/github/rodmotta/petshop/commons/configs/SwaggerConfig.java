@@ -1,4 +1,4 @@
-package com.github.rodmotta.petshop.configs;
+package com.github.rodmotta.petshop.commons.configs;
 
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;

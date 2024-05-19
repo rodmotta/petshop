@@ -1,4 +1,4 @@
-package com.github.rodmotta.petshop.dto.requests;
+package com.github.rodmotta.petshop.features.user.client.dto.request;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.github.rodmotta.petshop.dto.requests;
+package com.github.rodmotta.petshop.features.user.dto.requests;
 
 public record UserRequest(
         String username,
