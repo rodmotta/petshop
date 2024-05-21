@@ -1,28 +1,24 @@
-package com.github.rodmotta.petshop.features.user.client;
+package com.github.rodmotta.petshop.commons.clients.keycloak;
 
-import com.github.rodmotta.petshop.features.user.client.dto.request.KeycloakCreateUserCredentialRequest;
-import com.github.rodmotta.petshop.features.user.client.dto.request.KeycloakCreateUserRequest;
-import com.github.rodmotta.petshop.features.user.dto.requests.UserCredentialRequest;
-import com.github.rodmotta.petshop.features.user.dto.requests.UserRequest;
-import com.github.rodmotta.petshop.features.user.dto.response.TokenResponse;
+import com.github.rodmotta.petshop.commons.clients.keycloak.representation.response.KeycloakTokenResponse;
+import com.github.rodmotta.petshop.features.user.representation.requests.UserCredentialRequest;
+import com.github.rodmotta.petshop.features.user.representation.response.TokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
 import java.util.Objects;
 
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED;
 
 @Component
 @RequiredArgsConstructor
-public class KeycloakClient {
+public class KeycloakClient { //todo - refact
 
     private final RestTemplate restTemplate;
 
@@ -52,34 +48,18 @@ public class KeycloakClient {
 
         HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(form, headers);
 
-        return restTemplate.postForObject(
+        KeycloakTokenResponse response = restTemplate.postForObject(
                 String.format("%s/realms/%s/protocol/openid-connect/token", url, realm),
                 entity,
-                TokenResponse.class);
+                KeycloakTokenResponse.class);
+
+        if (Objects.isNull(response)) {
+            throw new RuntimeException();
+        }
+        return new TokenResponse(response);
     }
 
-    public void createUser(UserRequest req) {
-
-        String clientAccessToken = getClientToken();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(clientAccessToken);
-
-        KeycloakCreateUserRequest body = new KeycloakCreateUserRequest(
-                req.username(), req.email(), req.firstName(), req.lastName(),
-                List.of(new KeycloakCreateUserCredentialRequest(false, "password", req.password())),
-                true);
-
-        HttpEntity<KeycloakCreateUserRequest> entity = new HttpEntity<>(body, headers);
-
-        restTemplate.postForObject(
-                String.format("%s/admin/realms/%s/users", url, realm),
-                entity,
-                String.class);
-    }
-
-    private String getClientToken() {
+    public TokenResponse getClientToken() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(APPLICATION_FORM_URLENCODED);
 
@@ -90,14 +70,14 @@ public class KeycloakClient {
 
         HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(form, headers);
 
-        TokenResponse response = restTemplate.postForObject(
+        KeycloakTokenResponse response = restTemplate.postForObject(
                 String.format("%s/realms/%s/protocol/openid-connect/token", url, realm),
                 entity,
-                TokenResponse.class);
+                KeycloakTokenResponse.class);
 
         if (Objects.isNull(response)) {
             throw new RuntimeException();
         }
-        return response.accessToken();
+        return new TokenResponse(response);
     }
 }

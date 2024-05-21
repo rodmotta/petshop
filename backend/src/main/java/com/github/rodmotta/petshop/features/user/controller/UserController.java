@@ -1,8 +1,8 @@
 package com.github.rodmotta.petshop.features.user.controller;
 
-import com.github.rodmotta.petshop.features.user.dto.requests.UserCredentialRequest;
-import com.github.rodmotta.petshop.features.user.dto.requests.UserRequest;
-import com.github.rodmotta.petshop.features.user.dto.response.TokenResponse;
+import com.github.rodmotta.petshop.features.user.representation.requests.CreateUserRequest;
+import com.github.rodmotta.petshop.features.user.representation.requests.UserCredentialRequest;
+import com.github.rodmotta.petshop.features.user.representation.response.TokenResponse;
 import com.github.rodmotta.petshop.features.user.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -30,7 +30,7 @@ public class UserController {
 
     @PostMapping("user")
     @ResponseStatus(CREATED)
-    public void createUser(@RequestBody UserRequest user) {
+    public void createUser(@RequestBody @Valid CreateUserRequest user) {
         service.create(user);
     }
 }
