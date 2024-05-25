@@ -36,7 +36,8 @@ public class SecurityConfig {
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .requestMatchers(POST, "/user/token", "/user").permitAll()
                         .requestMatchers(GET, "/products").permitAll()
-                        .requestMatchers(POST, "/products").hasRole(EMPLOYEE.name())
+                        .requestMatchers(POST, "/product").hasRole(EMPLOYEE.name())
+                        .requestMatchers(POST, "/product/{productId}/image").hasRole(EMPLOYEE.name())
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(configurer -> configurer
                         .jwt(jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(jwtAuthenticationConverter())))

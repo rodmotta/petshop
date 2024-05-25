@@ -21,6 +21,11 @@ authentication-server:
   realm: petshop
   client_id: petshop-client
   client_secret: aT9ZtEHlqKSfA6aAQR68YvJ3oCjTvZjj
+aws:
+  access_key_id: ${AWS_ACCESS_KEY_ID}
+  secret_access_key: ${AWS_SECRET_ACCESS_KEY}
+  s3:
+    image-bucket: ${IMAGE_BUCKET_NAME}
 logging:
   level:
     org:
