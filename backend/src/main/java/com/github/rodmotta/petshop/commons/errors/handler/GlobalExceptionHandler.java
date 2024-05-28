@@ -1,6 +1,7 @@
 package com.github.rodmotta.petshop.commons.errors.handler;
 
 import com.github.rodmotta.petshop.commons.errors.exception.FeignClientException;
+import com.github.rodmotta.petshop.commons.errors.exception.NotFoundException;
 import com.github.rodmotta.petshop.commons.errors.exception.UnauthorizedException;
 import com.github.rodmotta.petshop.commons.errors.response.ErrorResponse;
 import com.github.rodmotta.petshop.commons.errors.response.ValidationResponse;
@@ -16,6 +17,14 @@ import static org.springframework.http.HttpStatus.*;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ResponseStatus(NOT_FOUND)
+    @ExceptionHandler(NotFoundException.class)
+    public ErrorResponse notFoundException(NotFoundException exception) {
+        return ErrorResponse.builder()
+                .message(exception.getMessage())
+                .build();
+    }
 
     @ResponseStatus(UNAUTHORIZED)
     @ExceptionHandler(UnauthorizedException.class)

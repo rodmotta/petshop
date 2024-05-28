@@ -35,12 +35,9 @@ public class ProductImageService {
         //todo: validar tamanho do arquivo
         if (Objects.isNull(image) || image.isEmpty()) throw new RuntimeException(); //fixme
 
-        String fileExtension = switch (image.getContentType()) {
-            case IMAGE_PNG_VALUE -> ".png";
-            case IMAGE_JPEG_VALUE -> ".jpeg";
-            default -> throw new RuntimeException(); //fixme
-        };
-
+        if (!image.getContentType().equals(IMAGE_PNG_VALUE) && !image.getContentType().equals(IMAGE_JPEG_VALUE)) {
+            throw new RuntimeException(); //fixme
+        }
 
         ProductModel product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException()); //fixme
@@ -51,8 +48,7 @@ public class ProductImageService {
 
         UUID productImageId = UUID.randomUUID();
         String path = String.format("%s/%s/%s", profile, productId, productImageId);
-        awsS3Client.uploadFile(image, bucket, path + fileExtension);
-
+        awsS3Client.uploadFile(image, bucket, path, image.getContentType());
 
         ProductImageModel productImage = ProductImageModel.builder()
                 .id(productImageId)
