@@ -2,6 +2,7 @@ package com.github.rodmotta.petshop.features.product.service;
 
 import com.github.rodmotta.petshop.commons.clients.aws.AwsS3Client;
 import com.github.rodmotta.petshop.commons.errors.exception.NotFoundException;
+import com.github.rodmotta.petshop.features.product.mapper.ProductMapper;
 import com.github.rodmotta.petshop.features.product.persistence.model.ProductModel;
 import com.github.rodmotta.petshop.features.product.persistence.repository.ProductRepository;
 import com.github.rodmotta.petshop.features.product.representation.request.ProductRequest;
@@ -9,6 +10,10 @@ import com.github.rodmotta.petshop.features.product.representation.responses.Pro
 import com.github.rodmotta.petshop.features.product.representation.responses.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,5 +53,20 @@ public class ProductService {
                 .toList();
 
         return modelToResponse(productModel, productImagesResponse);
+    }
+
+    public Page<ProductResponse> search(Pageable pageable, String name) {
+
+        ProductModel productModel = new ProductModel();
+        productModel.setName(name);
+
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withIgnoreCase()
+                .withMatcher("name", match -> match.contains());
+
+        Example<ProductModel> productExample = Example.of(productModel, matcher);
+
+        return productRepository.findAll(productExample, pageable)
+                .map(ProductMapper::modelToResponse);
     }
 }
