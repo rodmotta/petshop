@@ -1,6 +1,6 @@
 package com.github.rodmotta.petshop.commons.clients.keycloak.representation.request;
 
-import com.github.rodmotta.petshop.features.user.representation.requests.CreateUserRequest;
+import com.github.rodmotta.petshop.features.user.representation.request.CreateUserRequest;
 import lombok.Data;
 
 import java.util.List;

@@ -1,5 +1,6 @@
 package com.github.rodmotta.petshop.features.product.persistence.model;
 
+import com.github.rodmotta.petshop.features.product_image.persistence.model.ProductImageModel;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -6,8 +6,8 @@ import com.github.rodmotta.petshop.commons.clients.keycloak.representation.reque
 import com.github.rodmotta.petshop.commons.clients.keycloak.representation.request.UserRequest;
 import com.github.rodmotta.petshop.commons.clients.keycloak.representation.response.RoleResponse;
 import com.github.rodmotta.petshop.commons.clients.keycloak.representation.response.UserResponse;
-import com.github.rodmotta.petshop.features.user.representation.requests.CreateUserRequest;
-import com.github.rodmotta.petshop.features.user.representation.requests.UserCredentialRequest;
+import com.github.rodmotta.petshop.features.user.representation.request.CreateUserRequest;
+import com.github.rodmotta.petshop.features.user.representation.request.UserCredentialRequest;
 import com.github.rodmotta.petshop.features.user.representation.response.TokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

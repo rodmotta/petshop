@@ -1,10 +1,12 @@
-package com.github.rodmotta.petshop.features.product.service;
+package com.github.rodmotta.petshop.features.product_image.service;
 
 import com.github.rodmotta.petshop.commons.clients.aws.AwsS3Client;
-import com.github.rodmotta.petshop.features.product.persistence.model.ProductImageModel;
+import com.github.rodmotta.petshop.commons.errors.exception.NotFoundException;
+import com.github.rodmotta.petshop.commons.errors.exception.ServiceException;
 import com.github.rodmotta.petshop.features.product.persistence.model.ProductModel;
-import com.github.rodmotta.petshop.features.product.persistence.repository.ProductImageRepository;
 import com.github.rodmotta.petshop.features.product.persistence.repository.ProductRepository;
+import com.github.rodmotta.petshop.features.product_image.persistence.model.ProductImageModel;
+import com.github.rodmotta.petshop.features.product_image.persistence.repository.ProductImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -32,19 +34,15 @@ public class ProductImageService {
 
     public void addProductImage(UUID productId, MultipartFile image) {
 
-        //todo: validar tamanho do arquivo
-        if (Objects.isNull(image) || image.isEmpty()) throw new RuntimeException(); //fixme
-
-        if (!image.getContentType().equals(IMAGE_PNG_VALUE) && !image.getContentType().equals(IMAGE_JPEG_VALUE)) {
-            throw new RuntimeException(); //fixme
+        if (!Objects.equals(image.getContentType(), IMAGE_PNG_VALUE) && !Objects.equals(image.getContentType(), IMAGE_JPEG_VALUE)) {
+            throw new ServiceException("Only images in JPEG or PNG format are accepted.");
         }
 
         ProductModel product = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException()); //fixme
+                .orElseThrow(() -> new NotFoundException("Product not found."));
 
-        int productImageCount = productImageRepository.countByProductId(productId);
-        if (productImageCount >= 5) throw new RuntimeException(); //fixme
-
+        int numberOfImages = product.getProductImages().size();
+        if (numberOfImages >= 5) throw new ServiceException("The product has already reached the image limit.");
 
         UUID productImageId = UUID.randomUUID();
         String path = String.format("%s/%s/%s", profile, productId, productImageId);
@@ -54,7 +52,7 @@ public class ProductImageService {
                 .id(productImageId)
                 .productId(productId)
                 .url(path)
-                .position(productImageCount + 1)
+                .position(numberOfImages + 1)
                 .build();
         productImageRepository.save(productImage);
     }

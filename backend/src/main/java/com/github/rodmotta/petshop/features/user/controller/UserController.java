@@ -1,7 +1,7 @@
 package com.github.rodmotta.petshop.features.user.controller;
 
-import com.github.rodmotta.petshop.features.user.representation.requests.CreateUserRequest;
-import com.github.rodmotta.petshop.features.user.representation.requests.UserCredentialRequest;
+import com.github.rodmotta.petshop.features.user.representation.request.CreateUserRequest;
+import com.github.rodmotta.petshop.features.user.representation.request.UserCredentialRequest;
 import com.github.rodmotta.petshop.features.user.representation.response.TokenResponse;
 import com.github.rodmotta.petshop.features.user.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;

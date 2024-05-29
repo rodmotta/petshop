@@ -1,7 +1,7 @@
 package com.github.rodmotta.petshop.commons.clients.keycloak;
 
 import com.github.rodmotta.petshop.commons.clients.keycloak.representation.response.KeycloakTokenResponse;
-import com.github.rodmotta.petshop.features.user.representation.requests.UserCredentialRequest;
+import com.github.rodmotta.petshop.features.user.representation.request.UserCredentialRequest;
 import com.github.rodmotta.petshop.features.user.representation.response.TokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

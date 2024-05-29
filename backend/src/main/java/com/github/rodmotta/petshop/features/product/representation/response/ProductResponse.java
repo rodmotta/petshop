@@ -1,4 +1,6 @@
-package com.github.rodmotta.petshop.features.product.representation.responses;
+package com.github.rodmotta.petshop.features.product.representation.response;
+
+import com.github.rodmotta.petshop.features.product_image.representation.response.ProductImageResponse;
 
 import java.math.BigDecimal;
 import java.util.List;

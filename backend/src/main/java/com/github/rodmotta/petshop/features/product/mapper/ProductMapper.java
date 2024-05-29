@@ -2,8 +2,8 @@ package com.github.rodmotta.petshop.features.product.mapper;
 
 import com.github.rodmotta.petshop.features.product.persistence.model.ProductModel;
 import com.github.rodmotta.petshop.features.product.representation.request.ProductRequest;
-import com.github.rodmotta.petshop.features.product.representation.responses.ProductImageResponse;
-import com.github.rodmotta.petshop.features.product.representation.responses.ProductResponse;
+import com.github.rodmotta.petshop.features.product_image.representation.response.ProductImageResponse;
+import com.github.rodmotta.petshop.features.product.representation.response.ProductResponse;
 import lombok.NoArgsConstructor;
 
 import java.util.List;

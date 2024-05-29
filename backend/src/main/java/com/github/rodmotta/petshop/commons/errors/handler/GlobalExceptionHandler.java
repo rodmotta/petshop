@@ -2,6 +2,7 @@ package com.github.rodmotta.petshop.commons.errors.handler;
 
 import com.github.rodmotta.petshop.commons.errors.exception.FeignClientException;
 import com.github.rodmotta.petshop.commons.errors.exception.NotFoundException;
+import com.github.rodmotta.petshop.commons.errors.exception.ServiceException;
 import com.github.rodmotta.petshop.commons.errors.exception.UnauthorizedException;
 import com.github.rodmotta.petshop.commons.errors.response.ErrorResponse;
 import com.github.rodmotta.petshop.commons.errors.response.ValidationResponse;
@@ -49,6 +50,14 @@ public class GlobalExceptionHandler {
 
         return ErrorResponse.builder()
                 .validations(validations)
+                .build();
+    }
+
+    @ResponseStatus(BAD_REQUEST)
+    @ExceptionHandler(ServiceException.class)
+    public ErrorResponse serviceException(ServiceException exception) {
+        return ErrorResponse.builder()
+                .message(exception.getMessage())
                 .build();
     }
 

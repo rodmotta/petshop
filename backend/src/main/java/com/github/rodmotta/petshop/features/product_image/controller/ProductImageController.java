@@ -1,6 +1,6 @@
-package com.github.rodmotta.petshop.features.product.controller;
+package com.github.rodmotta.petshop.features.product_image.controller;
 
-import com.github.rodmotta.petshop.features.product.service.ProductImageService;
+import com.github.rodmotta.petshop.features.product_image.service.ProductImageService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

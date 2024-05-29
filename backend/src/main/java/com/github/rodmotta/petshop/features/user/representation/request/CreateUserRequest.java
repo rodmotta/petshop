@@ -1,4 +1,4 @@
-package com.github.rodmotta.petshop.features.user.representation.requests;
+package com.github.rodmotta.petshop.features.user.representation.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

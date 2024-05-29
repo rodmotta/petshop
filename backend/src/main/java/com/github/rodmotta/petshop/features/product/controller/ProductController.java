@@ -1,7 +1,7 @@
 package com.github.rodmotta.petshop.features.product.controller;
 
 import com.github.rodmotta.petshop.features.product.representation.request.ProductRequest;
-import com.github.rodmotta.petshop.features.product.representation.responses.ProductResponse;
+import com.github.rodmotta.petshop.features.product.representation.response.ProductResponse;
 import com.github.rodmotta.petshop.features.product.service.ProductService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
