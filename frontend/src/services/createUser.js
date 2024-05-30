@@ -10,7 +10,6 @@ export async function createUser(username, password, email, firstName, lastName)
             lastName: lastName
         });
     } catch (error) {
-        console.log(error)
         throw error;
     }
 }

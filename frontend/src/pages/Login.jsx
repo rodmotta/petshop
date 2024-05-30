@@ -2,8 +2,13 @@ import { useState } from 'react'
 import InputText from '../components/InputText'
 import SubmitButton from '../components/SubmitButton'
 import { userToken } from '../services/userToken'
+import Spinner from '../components/Spinner'
+import { useNavigate } from "react-router-dom"
 
 function Login() {
+
+    const navigate = useNavigate()
+
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
@@ -11,27 +16,37 @@ function Login() {
     const handleInputChange = (event) => {
         const { name, value } = event.target
         if (name === 'username') {
-            setUsername(value);
+            setUsername(value)
         } else if (name === 'password') {
-            setPassword(value);
+            setPassword(value)
         }
     }
 
     const handleSubmit = async (event) => {
-        event.preventDefault();
+        event.preventDefault()
+        toggleLoading()
 
-        setLoading(true)
-        await userToken(username, password)
-        setLoading(false)
+        try {
+            await userToken(username, password)
+            navigate("/")
+        } catch (error) {
+            console.log(error)
+            toggleLoading()
+        }
+    }
+
+    const toggleLoading = () => {
+        setLoading(prevLoading => !prevLoading)
     }
 
     return (
         <>
             <div className='flex justify-center items-center h-screen'>
                 <div className='w-80 p-5 bg-gray-100 border border-gray-300 rounded-lg'>
+                    {loading && <Spinner />}
                     <form onSubmit={handleSubmit}>
                         <InputText
-                            label='Usuário'
+                            label='Username'
                             type='text'
                             id='username'
                             name='username'
@@ -40,7 +55,7 @@ function Login() {
                             required
                         />
                         <InputText
-                            label='Senha'
+                            label='Password'
                             type='password'
                             id='password'
                             name='password'
@@ -48,7 +63,7 @@ function Login() {
                             onChange={handleInputChange}
                             required
                         />
-                        <SubmitButton text='Entrar' loading={loading} />
+                        <SubmitButton text='Login' />
                     </form>
                 </div>
             </div>

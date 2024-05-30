@@ -2,8 +2,13 @@ import { useState } from 'react'
 import InputText from '../components/InputText'
 import SubmitButton from '../components/SubmitButton'
 import { createUser } from '../services/createUser'
+import Spinner from '../components/Spinner'
+import { useNavigate } from "react-router-dom"
 
 function CreateUser() {
+
+    const navigate = useNavigate()
+
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [email, setEmail] = useState('')
@@ -14,32 +19,43 @@ function CreateUser() {
     const handleInputChange = (event) => {
         const { name, value } = event.target
         if (name === 'username') {
-            setUsername(value);
+            setUsername(value)
         } else if (name === 'password') {
-            setPassword(value);
+            setPassword(value)
         } else if (name === 'email') {
-            setEmail(value);
+            setEmail(value)
         } else if (name === 'firstName') {
-            setFirstName(value);
+            setFirstName(value)
         } else if (name === 'lastName') {
-            setLastName(value);
+            setLastName(value)
         }
     }
 
     const handleSubmit = async (event) => {
-        event.preventDefault();
+        event.preventDefault()
+        toggleLoading()
 
-        setLoading(true)
-        await createUser(username, password, email, firstName, lastName)
-        setLoading(false)
+        try {
+            await createUser(username, password, email, firstName, lastName)
+            navigate("/signin")
+        } catch (error) {
+            console.log(error)
+        } finally {
+            toggleLoading()
+        }
+    }
+
+    const toggleLoading = () => {
+        setLoading(prevLoading => !prevLoading)
     }
 
     return (
         <div className='flex justify-center items-center h-screen'>
             <div className='w-80 p-5 bg-gray-100 border border-gray-300 rounded-lg'>
+                {loading && <Spinner />}
                 <form onSubmit={handleSubmit}>
                     <InputText
-                        label='Usuário'
+                        label='Username'
                         type='text'
                         id='username'
                         name='username'
@@ -48,7 +64,7 @@ function CreateUser() {
                         required
                     />
                     <InputText
-                        label='Senha'
+                        label='Password'
                         type='password'
                         id='password'
                         name='password'
@@ -66,7 +82,7 @@ function CreateUser() {
                         required
                     />
                     <InputText
-                        label='Nome'
+                        label='First name'
                         type='text'
                         id='firstName'
                         name='firstName'
@@ -75,7 +91,7 @@ function CreateUser() {
                         required
                     />
                     <InputText
-                        label='Sobrenome'
+                        label='Last name'
                         type='text'
                         id='lastName'
                         name='lastName'
@@ -83,7 +99,7 @@ function CreateUser() {
                         onChange={handleInputChange}
                         required
                     />
-                    <SubmitButton text='Cadastrar' loading={loading} />
+                    <SubmitButton text='Signup' />
                 </form>
             </div>
         </div >

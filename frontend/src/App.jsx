@@ -15,7 +15,7 @@ function App() {
         <Route path="signup" element={<CreateUser />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </BrowserRouter>  
+    </BrowserRouter>
   )
 }
 

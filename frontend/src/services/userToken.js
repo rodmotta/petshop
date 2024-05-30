@@ -9,7 +9,6 @@ export async function userToken(username, password) {
         localStorage.setItem('accessToken', response.data.accessToken)
         localStorage.setItem('refreshToken', response.data.refreshToken)
     } catch (error) {
-        console.log(error)
         throw error;
     }
 }

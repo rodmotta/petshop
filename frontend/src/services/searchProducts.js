@@ -5,7 +5,6 @@ export async function searchProducts(pageNumber) {
         const response = await axios.get(`http://localhost:8000/products?page=${pageNumber}&size=8`);
         return response.data
     } catch (error) {
-        console.log(error)
         throw error;
     }
 }
