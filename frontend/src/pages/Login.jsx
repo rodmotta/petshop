@@ -40,34 +40,32 @@ function Login() {
     }
 
     return (
-        <>
-            <div className='flex justify-center items-center h-screen'>
-                <div className='w-80 p-5 bg-gray-100 border border-gray-300 rounded-lg'>
-                    {loading && <Spinner />}
-                    <form onSubmit={handleSubmit}>
-                        <InputText
-                            label='Username'
-                            type='text'
-                            id='username'
-                            name='username'
-                            value={username}
-                            onChange={handleInputChange}
-                            required
-                        />
-                        <InputText
-                            label='Password'
-                            type='password'
-                            id='password'
-                            name='password'
-                            value={password}
-                            onChange={handleInputChange}
-                            required
-                        />
-                        <SubmitButton text='Login' />
-                    </form>
-                </div>
+        <div className='flex justify-center items-center h-screen'>
+            <div className='w-80 p-5 bg-gray-100 border border-gray-300 rounded-lg'>
+                {loading && <Spinner />}
+                <form onSubmit={handleSubmit}>
+                    <InputText
+                        label='Username'
+                        type='text'
+                        id='username'
+                        name='username'
+                        value={username}
+                        onChange={handleInputChange}
+                        required
+                    />
+                    <InputText
+                        label='Password'
+                        type='password'
+                        id='password'
+                        name='password'
+                        value={password}
+                        onChange={handleInputChange}
+                        required
+                    />
+                    <SubmitButton text='Login' />
+                </form>
             </div>
-        </>
+        </div>
     )
 }
 
