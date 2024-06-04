@@ -2,12 +2,12 @@ package com.github.rodmotta.petshop.features.product.service;
 
 import com.github.rodmotta.petshop.commons.clients.aws.AwsS3Client;
 import com.github.rodmotta.petshop.commons.errors.exception.NotFoundException;
-import com.github.rodmotta.petshop.features.product.persistence.model.ProductModel;
+import com.github.rodmotta.petshop.features.product.persistence.entities.ProductEntity;
+import com.github.rodmotta.petshop.features.product.persistence.entities.ImageEntity;
 import com.github.rodmotta.petshop.features.product.persistence.repository.ProductRepository;
 import com.github.rodmotta.petshop.features.product.representation.request.ProductRequest;
-import com.github.rodmotta.petshop.features.product_image.representation.response.ProductImageResponse;
+import com.github.rodmotta.petshop.features.product.representation.response.ImageResponse;
 import com.github.rodmotta.petshop.features.product.representation.response.ProductResponse;
-import com.github.rodmotta.petshop.features.product_image.persistence.model.ProductImageModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Example;
@@ -33,30 +33,30 @@ public class ProductService {
 
     public ProductResponse create(ProductRequest productRequest) {
 
-        ProductModel product = requestToModel(productRequest);
-        ProductModel savedProduct = productRepository.save(product);
+        ProductEntity product = requestToModel(productRequest);
+        ProductEntity savedProduct = productRepository.save(product);
         return modelToResponse(savedProduct);
     }
 
     public ProductResponse findById(UUID productId) {
 
-        ProductModel product = productRepository.findById(productId)
+        ProductEntity product = productRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException("Product not found."));
 
-        List<ProductImageResponse> productImagesResponse = setProductImagesResponse(product);
+        List<ImageResponse> productImagesResponse = setProductImagesResponse(product);
 
         return modelToResponse(product, productImagesResponse);
     }
 
     public Page<ProductResponse> search(Pageable pageable, String name) {
 
-        Example<ProductModel> productExample = createProductExample(name);
+        Example<ProductEntity> productExample = createProductExample(name);
 
-        Page<ProductModel> products = productRepository.findAll(productExample, pageable);
+        Page<ProductEntity> products = productRepository.findAll(productExample, pageable);
 
         return products.map(product -> {
 
-            ProductImageResponse imageResponse = setMainProductImageResponse(product)
+            ImageResponse imageResponse = setMainProductImageResponse(product)
                     .orElse(null);
 
             return Objects.isNull(imageResponse)
@@ -65,9 +65,9 @@ public class ProductService {
         });
     }
 
-    private Example<ProductModel> createProductExample(String name) {
+    private Example<ProductEntity> createProductExample(String name) {
 
-        ProductModel product = ProductModel.builder()
+        ProductEntity product = ProductEntity.builder()
                 .name(name)
                 .build();
 
@@ -78,25 +78,25 @@ public class ProductService {
         return Example.of(product, matcher);
     }
 
-    private List<ProductImageResponse> setProductImagesResponse(ProductModel product) {
+    private List<ImageResponse> setProductImagesResponse(ProductEntity product) {
 
-        return product.getProductImages()
+        return product.getImages()
                 .stream()
                 .map(this::getImageUrl)
                 .toList();
     }
 
-    private Optional<ProductImageResponse> setMainProductImageResponse(ProductModel product) {
+    private Optional<ImageResponse> setMainProductImageResponse(ProductEntity product) {
 
-        return product.getProductImages()
+        return product.getImages()
                 .stream()
-                .min(Comparator.comparing(ProductImageModel::getPosition))
+                .min(Comparator.comparing(ImageEntity::getPosition))
                 .map(this::getImageUrl);
     }
 
-    private ProductImageResponse getImageUrl(ProductImageModel productImage) {
+    private ImageResponse getImageUrl(ImageEntity productImage) {
 
         String url = awsS3Client.getFileUrl(bucket, productImage.getUrl());
-        return new ProductImageResponse(url, productImage.getPosition());
+        return new ImageResponse(url, productImage.getPosition());
     }
 }

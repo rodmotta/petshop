@@ -1,6 +1,5 @@
-package com.github.rodmotta.petshop.features.product.persistence.model;
+package com.github.rodmotta.petshop.features.product.persistence.entities;
 
-import com.github.rodmotta.petshop.features.product_image.persistence.model.ProductImageModel;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,7 +16,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @AllArgsConstructor
 @Entity
 @Table(name = "product")
-public class ProductModel {
+public class ProductEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -26,5 +25,5 @@ public class ProductModel {
     private String name;
     private BigDecimal price;
     @OneToMany(mappedBy = "product", fetch = LAZY)
-    private List<ProductImageModel> productImages;
+    private List<ImageEntity> images;
 }

@@ -1,12 +1,12 @@
-package com.github.rodmotta.petshop.features.product_image.service;
+package com.github.rodmotta.petshop.features.product.service;
 
 import com.github.rodmotta.petshop.commons.clients.aws.AwsS3Client;
 import com.github.rodmotta.petshop.commons.errors.exception.NotFoundException;
 import com.github.rodmotta.petshop.commons.errors.exception.ServiceException;
-import com.github.rodmotta.petshop.features.product.persistence.model.ProductModel;
+import com.github.rodmotta.petshop.features.product.persistence.entities.ProductEntity;
+import com.github.rodmotta.petshop.features.product.persistence.entities.ImageEntity;
+import com.github.rodmotta.petshop.features.product.persistence.repository.ImageRepository;
 import com.github.rodmotta.petshop.features.product.persistence.repository.ProductRepository;
-import com.github.rodmotta.petshop.features.product_image.persistence.model.ProductImageModel;
-import com.github.rodmotta.petshop.features.product_image.persistence.repository.ProductImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,10 +20,10 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 
 @Service
 @RequiredArgsConstructor
-public class ProductImageService {
+public class ImageService {
 
     private final AwsS3Client awsS3Client;
-    private final ProductImageRepository productImageRepository;
+    private final ImageRepository imageRepository;
     private final ProductRepository productRepository;
 
     @Value("${spring.profiles.active}")
@@ -32,28 +32,28 @@ public class ProductImageService {
     @Value("${aws.s3.image-bucket}")
     private String bucket;
 
-    public void addProductImage(UUID productId, MultipartFile image) {
+    public void addImage(UUID productId, MultipartFile image) {
 
         if (!Objects.equals(image.getContentType(), IMAGE_PNG_VALUE) && !Objects.equals(image.getContentType(), IMAGE_JPEG_VALUE)) {
             throw new ServiceException("Only images in JPEG or PNG format are accepted.");
         }
 
-        ProductModel product = productRepository.findById(productId)
+        ProductEntity product = productRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException("Product not found."));
 
-        int numberOfImages = product.getProductImages().size();
+        int numberOfImages = product.getImages().size();
         if (numberOfImages >= 5) throw new ServiceException("The product has already reached the image limit.");
 
-        UUID productImageId = UUID.randomUUID();
-        String path = String.format("%s/%s/%s", profile, productId, productImageId);
+        UUID imageId = UUID.randomUUID();
+        String path = String.format("%s/%s/%s", profile, productId, imageId);
         awsS3Client.uploadFile(image, bucket, path, image.getContentType());
 
-        ProductImageModel productImage = ProductImageModel.builder()
-                .id(productImageId)
+        ImageEntity productImage = ImageEntity.builder()
+                .id(imageId)
                 .productId(productId)
                 .url(path)
                 .position(numberOfImages + 1)
                 .build();
-        productImageRepository.save(productImage);
+        imageRepository.save(productImage);
     }
 }

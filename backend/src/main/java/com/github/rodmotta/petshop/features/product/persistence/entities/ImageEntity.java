@@ -1,6 +1,5 @@
-package com.github.rodmotta.petshop.features.product_image.persistence.model;
+package com.github.rodmotta.petshop.features.product.persistence.entities;
 
-import com.github.rodmotta.petshop.features.product.persistence.model.ProductModel;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,7 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = "product_image")
-public class ProductImageModel {
+public class ImageEntity {
 
     @Id
     private UUID id;
@@ -24,5 +23,5 @@ public class ProductImageModel {
 
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private ProductModel product;
+    private ProductEntity product;
 }

@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.github.rodmotta.petshop.features.user.enums.Roles.EMPLOYEE;
+import static com.github.rodmotta.petshop.commons.enums.Roles.EMPLOYEE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 

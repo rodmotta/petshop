@@ -10,6 +10,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @FeignClient(value = "keycloak-admin",
         url = "${authentication-server.url}",
@@ -27,6 +28,6 @@ public interface KeycloakAdminClient {
     List<RoleResponse> getRealmRoles();
 
     @PostMapping("/users/{userId}/role-mappings/realm")
-    void addRealmRolesToUser(@PathVariable String userId,
+    void addRealmRolesToUser(@PathVariable UUID userId,
                              @RequestBody List<RoleRequest> roles);
 }

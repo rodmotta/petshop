@@ -1,6 +1,6 @@
-package com.github.rodmotta.petshop.features.product_image.controller;
+package com.github.rodmotta.petshop.features.product.controller;
 
-import com.github.rodmotta.petshop.features.product_image.service.ProductImageService;
+import com.github.rodmotta.petshop.features.product.service.ImageService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -11,16 +11,16 @@ import java.util.UUID;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
-@Tag(name = "Product image")
+@Tag(name = "Products")
 @RequiredArgsConstructor
-public class ProductImageController {
+public class ImageController {
 
-    private final ProductImageService productImageService;
+    private final ImageService imageService;
 
     @PostMapping("product/{productId}/image")
     @ResponseStatus(CREATED)
-    public void addProductImage(@PathVariable UUID productId,
+    public void addImage(@PathVariable UUID productId,
                                 @RequestParam MultipartFile image) {
-        productImageService.addProductImage(productId, image);
+        imageService.addImage(productId, image);
     }
 }

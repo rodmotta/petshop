@@ -6,6 +6,7 @@ import com.github.rodmotta.petshop.commons.clients.keycloak.representation.reque
 import com.github.rodmotta.petshop.commons.clients.keycloak.representation.request.UserRequest;
 import com.github.rodmotta.petshop.commons.clients.keycloak.representation.response.RoleResponse;
 import com.github.rodmotta.petshop.commons.clients.keycloak.representation.response.UserResponse;
+import com.github.rodmotta.petshop.features.customer.service.CustomerService;
 import com.github.rodmotta.petshop.features.user.representation.request.CreateUserRequest;
 import com.github.rodmotta.petshop.features.user.representation.request.UserCredentialRequest;
 import com.github.rodmotta.petshop.features.user.representation.response.TokenResponse;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.github.rodmotta.petshop.features.user.enums.Roles.CUSTOMER;
+import static com.github.rodmotta.petshop.commons.enums.Roles.CUSTOMER;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +23,7 @@ public class UserService {
 
     private final KeycloakAdminClient keycloakAdminClient;
     private final KeycloakClient keycloakClient;
+    private final CustomerService customerService;
 
     public TokenResponse getToken(UserCredentialRequest userCredential) {
         return keycloakClient.getUserToken(userCredential);
@@ -44,5 +46,7 @@ public class UserService {
 
         RoleRequest roleRequest = new RoleRequest(role.id(), CUSTOMER.name());
         keycloakAdminClient.addRealmRolesToUser(user.id(), List.of(roleRequest));
+
+        customerService.create(user.id(), createUserRequest);
     }
 }
