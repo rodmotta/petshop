@@ -13,15 +13,6 @@ function Login() {
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
 
-    const handleInputChange = (event) => {
-        const { name, value } = event.target
-        if (name === 'username') {
-            setUsername(value)
-        } else if (name === 'password') {
-            setPassword(value)
-        }
-    }
-
     const handleSubmit = async (event) => {
         event.preventDefault()
         toggleLoading()
@@ -35,22 +26,20 @@ function Login() {
         }
     }
 
-    const toggleLoading = () => {
-        setLoading(prevLoading => !prevLoading)
-    }
+    const toggleLoading = () => setLoading(prevLoading => !prevLoading)
 
     return (
         <div className='flex justify-center items-center h-screen'>
+            {loading && <Spinner />}
             <div className='w-80 p-5 bg-gray-100 border border-gray-300 rounded-lg'>
-                {loading && <Spinner />}
+                <h1 className='text-3xl text-center mb-2 font-semibold'>Login</h1>
                 <form onSubmit={handleSubmit}>
                     <InputText
                         label='Username'
                         type='text'
                         id='username'
                         name='username'
-                        value={username}
-                        onChange={handleInputChange}
+                        onChange={event => setUsername(event.target.value)}
                         required
                     />
                     <InputText
@@ -58,12 +47,14 @@ function Login() {
                         type='password'
                         id='password'
                         name='password'
-                        value={password}
-                        onChange={handleInputChange}
+                        onChange={event => setPassword(event.target.value)}
                         required
                     />
                     <SubmitButton text='Login' />
                 </form>
+                <div className='text-center mt-4'>
+                    Don't have an account? Sign up
+                </div>
             </div>
         </div>
     )

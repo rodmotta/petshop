@@ -11,25 +11,11 @@ function CreateUser() {
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
     const [email, setEmail] = useState('')
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [loading, setLoading] = useState(false)
-
-    const handleInputChange = (event) => {
-        const { name, value } = event.target
-        if (name === 'username') {
-            setUsername(value)
-        } else if (name === 'password') {
-            setPassword(value)
-        } else if (name === 'email') {
-            setEmail(value)
-        } else if (name === 'firstName') {
-            setFirstName(value)
-        } else if (name === 'lastName') {
-            setLastName(value)
-        }
-    }
 
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -40,27 +26,24 @@ function CreateUser() {
             navigate("/signin")
         } catch (error) {
             console.log(error)
-        } finally {
             toggleLoading()
         }
     }
 
-    const toggleLoading = () => {
-        setLoading(prevLoading => !prevLoading)
-    }
+    const toggleLoading = () => setLoading(prevLoading => !prevLoading)
 
     return (
         <div className='flex justify-center items-center h-screen'>
+            {loading && <Spinner />}
             <div className='w-80 p-5 bg-gray-100 border border-gray-300 rounded-lg'>
-                {loading && <Spinner />}
+                <h1 className='text-3xl text-center mb-2 font-semibold'>Create account</h1>
                 <form onSubmit={handleSubmit}>
                     <InputText
                         label='Username'
                         type='text'
                         id='username'
                         name='username'
-                        value={username}
-                        onChange={handleInputChange}
+                        onChange={event => setUsername(event.target.value)}
                         required
                     />
                     <InputText
@@ -68,8 +51,15 @@ function CreateUser() {
                         type='password'
                         id='password'
                         name='password'
-                        value={password}
-                        onChange={handleInputChange}
+                        onChange={event => setPassword(event.target.value)}
+                        required
+                    />
+                    <InputText
+                        label='Confirm password'
+                        type='password'
+                        id='confirmPassword'
+                        name='confirmPassword'
+                        onChange={event => setConfirmPassword(event.target.value)}
                         required
                     />
                     <InputText
@@ -77,8 +67,7 @@ function CreateUser() {
                         type='email'
                         id='email'
                         name='email'
-                        value={email}
-                        onChange={handleInputChange}
+                        onChange={event => setEmail(event.target.value)}
                         required
                     />
                     <InputText
@@ -86,8 +75,7 @@ function CreateUser() {
                         type='text'
                         id='firstName'
                         name='firstName'
-                        value={firstName}
-                        onChange={handleInputChange}
+                        onChange={event => setFirstName(event.target.value)}
                         required
                     />
                     <InputText
@@ -95,8 +83,7 @@ function CreateUser() {
                         type='text'
                         id='lastName'
                         name='lastName'
-                        value={lastName}
-                        onChange={handleInputChange}
+                        onChange={event => setLastName(event.target.value)}
                         required
                     />
                     <SubmitButton text='Signup' />

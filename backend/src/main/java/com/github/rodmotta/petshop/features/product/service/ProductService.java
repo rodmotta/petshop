@@ -2,8 +2,8 @@ package com.github.rodmotta.petshop.features.product.service;
 
 import com.github.rodmotta.petshop.commons.clients.aws.AwsS3Client;
 import com.github.rodmotta.petshop.commons.errors.exception.NotFoundException;
-import com.github.rodmotta.petshop.features.product.persistence.entities.ProductEntity;
 import com.github.rodmotta.petshop.features.product.persistence.entities.ImageEntity;
+import com.github.rodmotta.petshop.features.product.persistence.entities.ProductEntity;
 import com.github.rodmotta.petshop.features.product.persistence.repository.ProductRepository;
 import com.github.rodmotta.petshop.features.product.representation.request.ProductRequest;
 import com.github.rodmotta.petshop.features.product.representation.response.ImageResponse;
