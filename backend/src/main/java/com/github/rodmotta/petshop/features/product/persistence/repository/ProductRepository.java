@@ -1,9 +1,0 @@
-package com.github.rodmotta.petshop.features.product.persistence.repository;
-
-import com.github.rodmotta.petshop.features.product.persistence.entities.ProductEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.UUID;
-
-public interface ProductRepository extends JpaRepository<ProductEntity, UUID> {
-}
