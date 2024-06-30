@@ -1,9 +1,9 @@
 package com.github.rodmotta.petshop.dtos.mappers;
 
-import com.github.rodmotta.petshop.persistence.entities.ProductEntity;
 import com.github.rodmotta.petshop.dtos.requests.ProductRequest;
 import com.github.rodmotta.petshop.dtos.responses.ImageResponse;
 import com.github.rodmotta.petshop.dtos.responses.ProductResponse;
+import com.github.rodmotta.petshop.persistence.entities.ProductEntity;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
@@ -22,10 +22,20 @@ public class ProductMapper {
     }
 
     public static ProductResponse modelToResponse(ProductEntity model) {
-        return new ProductResponse(model.getId(), model.getName(), model.getPrice(), null);
+        return new ProductResponse(
+                model.getId(),
+                model.getName(),
+                model.getPrice(),
+                null
+        );
     }
 
     public static ProductResponse modelToResponse(ProductEntity model, List<ImageResponse> productImagesResponse) {
-        return new ProductResponse(model.getId(), model.getName(), model.getPrice(), productImagesResponse);
+        return new ProductResponse(
+                model.getId(),
+                model.getName(),
+                model.getPrice(),
+                productImagesResponse
+        );
     }
 }

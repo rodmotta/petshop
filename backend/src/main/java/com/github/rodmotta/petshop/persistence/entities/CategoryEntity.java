@@ -6,7 +6,7 @@ import lombok.*;
 import java.util.List;
 import java.util.UUID;
 
-import static jakarta.persistence.FetchType.*;
+import static jakarta.persistence.FetchType.LAZY;
 
 @Getter
 @Setter

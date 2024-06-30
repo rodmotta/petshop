@@ -1,20 +1,22 @@
 package com.github.rodmotta.petshop.services;
 
-import com.github.rodmotta.petshop.clients.keycloak.KeycloakClient;
-import com.github.rodmotta.petshop.clients.keycloak.dtos.request.RoleRequest;
-import com.github.rodmotta.petshop.clients.keycloak.dtos.request.UserRequest;
-import com.github.rodmotta.petshop.clients.keycloak.dtos.response.KeycloakToken;
-import com.github.rodmotta.petshop.clients.keycloak.dtos.response.RoleResponse;
-import com.github.rodmotta.petshop.clients.keycloak.dtos.response.UserResponse;
 import com.github.rodmotta.petshop.clients.keycloak.KeycloakAdminClient;
+import com.github.rodmotta.petshop.clients.keycloak.KeycloakClient;
 import com.github.rodmotta.petshop.dtos.requests.CreateUserRequest;
+import com.github.rodmotta.petshop.dtos.requests.RoleKeycloakRequest;
 import com.github.rodmotta.petshop.dtos.requests.UserCredentialRequest;
+import com.github.rodmotta.petshop.dtos.requests.UserKeycloakRequest;
+import com.github.rodmotta.petshop.dtos.responses.RoleKeycloakResponse;
+import com.github.rodmotta.petshop.dtos.responses.TokenKeycloakResponse;
 import com.github.rodmotta.petshop.dtos.responses.TokenResponse;
+import com.github.rodmotta.petshop.dtos.responses.UserKeycloakResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.github.rodmotta.petshop.dtos.mappers.TokenMapper.keycloakResponseToResponse;
+import static com.github.rodmotta.petshop.dtos.mappers.UserMapper.requestToKeycloakRequest;
 import static com.github.rodmotta.petshop.enums.Roles.CUSTOMER;
 
 @Service
@@ -26,26 +28,26 @@ public class UserService {
     private final CustomerService customerService;
 
     public TokenResponse getToken(UserCredentialRequest userCredential) {
-        KeycloakToken keycloakToken = keycloakClient.getUserToken(userCredential);
-        return new TokenResponse(keycloakToken);
+        TokenKeycloakResponse keycloakToken = keycloakClient.getUserToken(userCredential);
+        return keycloakResponseToResponse(keycloakToken);
     }
 
     public void create(CreateUserRequest createUserRequest) {
-        UserRequest userRequest = new UserRequest(createUserRequest);
+        UserKeycloakRequest userRequest = requestToKeycloakRequest(createUserRequest);
         keycloakAdminClient.createUser(userRequest);
 
-        List<UserResponse> users = keycloakAdminClient.getUsers(createUserRequest.username());
-        UserResponse user = users.stream()
+        List<UserKeycloakResponse> users = keycloakAdminClient.getUsers(createUserRequest.username());
+        UserKeycloakResponse user = users.stream()
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException()); //todo - handling
 
-        List<RoleResponse> roles = keycloakAdminClient.getRealmRoles();
-        RoleResponse role = roles.stream()
+        List<RoleKeycloakResponse> roles = keycloakAdminClient.getRealmRoles();
+        RoleKeycloakResponse role = roles.stream()
                 .filter(r -> r.name().equals(CUSTOMER.name()))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException()); //todo - handling
 
-        RoleRequest roleRequest = new RoleRequest(role.id(), CUSTOMER.name());
+        RoleKeycloakRequest roleRequest = new RoleKeycloakRequest(role.id(), CUSTOMER.name());
         keycloakAdminClient.addRealmRolesToUser(user.id(), List.of(roleRequest));
 
         customerService.create(user.id(), createUserRequest);

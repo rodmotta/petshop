@@ -1,7 +1,7 @@
 package com.github.rodmotta.petshop.clients.keycloak;
 
-import com.github.rodmotta.petshop.clients.keycloak.dtos.response.KeycloakToken;
 import com.github.rodmotta.petshop.dtos.requests.UserCredentialRequest;
+import com.github.rodmotta.petshop.dtos.responses.TokenKeycloakResponse;
 import com.github.rodmotta.petshop.errors.handler.RestTemplateErrorHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -37,7 +37,7 @@ public class KeycloakClient {
                 .build();
     }
 
-    public KeycloakToken getUserToken(UserCredentialRequest userCredential) {
+    public TokenKeycloakResponse getUserToken(UserCredentialRequest userCredential) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(APPLICATION_FORM_URLENCODED);
 
@@ -50,10 +50,10 @@ public class KeycloakClient {
 
         HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(form, headers);
 
-        return restTemplate.postForObject(url + "/realms/" + realm + "/protocol/openid-connect/token", entity, KeycloakToken.class);
+        return restTemplate.postForObject(url + "/realms/" + realm + "/protocol/openid-connect/token", entity, TokenKeycloakResponse.class);
     }
 
-    public KeycloakToken getClientToken() {
+    public TokenKeycloakResponse getClientToken() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(APPLICATION_FORM_URLENCODED);
 
@@ -64,6 +64,6 @@ public class KeycloakClient {
 
         HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(form, headers);
 
-        return restTemplate.postForObject(url + "/realms/" + realm + "/protocol/openid-connect/token", entity, KeycloakToken.class);
+        return restTemplate.postForObject(url + "/realms/" + realm + "/protocol/openid-connect/token", entity, TokenKeycloakResponse.class);
     }
 }

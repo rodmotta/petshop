@@ -3,8 +3,8 @@ package com.github.rodmotta.petshop.services;
 import com.github.rodmotta.petshop.clients.aws.AWSS3Client;
 import com.github.rodmotta.petshop.errors.exception.NotFoundException;
 import com.github.rodmotta.petshop.errors.exception.ServiceException;
-import com.github.rodmotta.petshop.persistence.entities.ProductEntity;
 import com.github.rodmotta.petshop.persistence.entities.ImageEntity;
+import com.github.rodmotta.petshop.persistence.entities.ProductEntity;
 import com.github.rodmotta.petshop.persistence.repositories.ImageRepository;
 import com.github.rodmotta.petshop.persistence.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,6 @@ public class ImageService {
     private String bucket;
 
     public void addImage(UUID productId, MultipartFile image) {
-
         if (!Objects.equals(image.getContentType(), IMAGE_PNG_VALUE) && !Objects.equals(image.getContentType(), IMAGE_JPEG_VALUE)) {
             throw new ServiceException("Only images in JPEG or PNG format are accepted.");
         }

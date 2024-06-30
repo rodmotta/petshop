@@ -1,10 +1,10 @@
 package com.github.rodmotta.petshop.dtos.mappers;
 
-import com.github.rodmotta.petshop.persistence.entities.AddressEntity;
-import com.github.rodmotta.petshop.persistence.entities.CustomerEntity;
+import com.github.rodmotta.petshop.dtos.requests.CreateUserRequest;
 import com.github.rodmotta.petshop.dtos.responses.AddressResponse;
 import com.github.rodmotta.petshop.dtos.responses.CustomerResponse;
-import com.github.rodmotta.petshop.dtos.requests.CreateUserRequest;
+import com.github.rodmotta.petshop.persistence.entities.AddressEntity;
+import com.github.rodmotta.petshop.persistence.entities.CustomerEntity;
 import lombok.NoArgsConstructor;
 
 import java.util.UUID;
@@ -15,7 +15,6 @@ import static lombok.AccessLevel.PRIVATE;
 public class CustomerMapper {
 
     public static CustomerResponse entityToResponse(CustomerEntity customerEntity) {
-
         return new CustomerResponse(
                 customerEntity.getId(),
                 customerEntity.getFirstName(),

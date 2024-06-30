@@ -20,7 +20,7 @@ public class ImageController {
     @PostMapping("product/{productId}/image")
     @ResponseStatus(CREATED)
     public void addImage(@PathVariable UUID productId,
-                                @RequestParam MultipartFile image) {
+                         @RequestParam MultipartFile image) {
         imageService.addImage(productId, image);
     }
 }

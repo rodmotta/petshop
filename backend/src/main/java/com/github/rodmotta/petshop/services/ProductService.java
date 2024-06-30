@@ -1,13 +1,13 @@
 package com.github.rodmotta.petshop.services;
 
 import com.github.rodmotta.petshop.clients.aws.AWSS3Client;
+import com.github.rodmotta.petshop.dtos.requests.ProductRequest;
+import com.github.rodmotta.petshop.dtos.responses.ImageResponse;
+import com.github.rodmotta.petshop.dtos.responses.ProductResponse;
 import com.github.rodmotta.petshop.errors.exception.NotFoundException;
 import com.github.rodmotta.petshop.persistence.entities.ImageEntity;
 import com.github.rodmotta.petshop.persistence.entities.ProductEntity;
 import com.github.rodmotta.petshop.persistence.repositories.ProductRepository;
-import com.github.rodmotta.petshop.dtos.requests.ProductRequest;
-import com.github.rodmotta.petshop.dtos.responses.ImageResponse;
-import com.github.rodmotta.petshop.dtos.responses.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Example;
@@ -32,30 +32,25 @@ public class ProductService {
     private String bucket;
 
     public ProductResponse create(ProductRequest productRequest) {
-
         ProductEntity product = requestToModel(productRequest);
         ProductEntity savedProduct = productRepository.save(product);
         return modelToResponse(savedProduct);
     }
 
     public ProductResponse findById(UUID productId) {
-
         ProductEntity product = productRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException("Product not found."));
 
         List<ImageResponse> productImagesResponse = setProductImagesResponse(product);
-
         return modelToResponse(product, productImagesResponse);
     }
 
     public Page<ProductResponse> search(Pageable pageable, String name) {
-
         Example<ProductEntity> productExample = createProductExample(name);
 
         Page<ProductEntity> products = productRepository.findAll(productExample, pageable);
 
         return products.map(product -> {
-
             ImageResponse imageResponse = setMainProductImageResponse(product)
                     .orElse(null);
 
@@ -66,7 +61,6 @@ public class ProductService {
     }
 
     private Example<ProductEntity> createProductExample(String name) {
-
         ProductEntity product = ProductEntity.builder()
                 .name(name)
                 .build();
@@ -79,7 +73,6 @@ public class ProductService {
     }
 
     private List<ImageResponse> setProductImagesResponse(ProductEntity product) {
-
         return product.getImages()
                 .stream()
                 .map(this::getImageUrl)
@@ -87,7 +80,6 @@ public class ProductService {
     }
 
     private Optional<ImageResponse> setMainProductImageResponse(ProductEntity product) {
-
         return product.getImages()
                 .stream()
                 .min(Comparator.comparing(ImageEntity::getPosition))
@@ -95,7 +87,6 @@ public class ProductService {
     }
 
     private ImageResponse getImageUrl(ImageEntity productImage) {
-
         String url = awsS3Client.getFileUrl(bucket, productImage.getUrl());
         return new ImageResponse(url, productImage.getPosition());
     }

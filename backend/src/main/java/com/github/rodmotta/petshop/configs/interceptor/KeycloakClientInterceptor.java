@@ -7,6 +7,8 @@ import feign.RequestTemplate;
 
 import java.time.LocalDateTime;
 
+import static com.github.rodmotta.petshop.dtos.mappers.TokenMapper.keycloakResponseToResponse;
+
 public class KeycloakClientInterceptor implements RequestInterceptor {
 
     private final KeycloakClient keycloakClient;
@@ -19,14 +21,14 @@ public class KeycloakClientInterceptor implements RequestInterceptor {
     @Override
     public void apply(RequestTemplate requestTemplate) {
         if (token == null) {
-            token = new TokenResponse(keycloakClient.getClientToken());
+            token = keycloakResponseToResponse(keycloakClient.getClientToken());
         }
 
-        if (LocalDateTime.now().isBefore(token.getAccessTokenExpire())) {
-            requestTemplate.header("Authorization", "Bearer " + token.getAccessToken());
+        if (LocalDateTime.now().isBefore(token.accessTokenExpire())) {
+            requestTemplate.header("Authorization", "Bearer " + token.accessToken());
         } else {
-            token = new TokenResponse(keycloakClient.getClientToken());
-            requestTemplate.header("Authorization", "Bearer " + token.getAccessToken());
+            token = keycloakResponseToResponse(keycloakClient.getClientToken());
+            requestTemplate.header("Authorization", "Bearer " + token.accessToken());
         }
     }
 }

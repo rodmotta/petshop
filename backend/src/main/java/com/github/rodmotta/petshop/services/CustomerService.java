@@ -1,12 +1,12 @@
 package com.github.rodmotta.petshop.services;
 
+import com.github.rodmotta.petshop.dtos.mappers.CustomerMapper;
+import com.github.rodmotta.petshop.dtos.requests.CreateUserRequest;
+import com.github.rodmotta.petshop.dtos.responses.CustomerResponse;
 import com.github.rodmotta.petshop.errors.exception.NotFoundException;
 import com.github.rodmotta.petshop.persistence.entities.CustomerEntity;
-import com.github.rodmotta.petshop.dtos.mappers.CustomerMapper;
 import com.github.rodmotta.petshop.persistence.repositories.AddressRepository;
 import com.github.rodmotta.petshop.persistence.repositories.CustomerRepository;
-import com.github.rodmotta.petshop.dtos.responses.CustomerResponse;
-import com.github.rodmotta.petshop.dtos.requests.CreateUserRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +27,6 @@ public class CustomerService {
                 .orElseThrow(() -> new NotFoundException("Customer not found."));
     }
 
-    //todo - muito acoplamento
     public void create(UUID id, CreateUserRequest userRequest) {
         CustomerEntity customerEntity = userRequestToCustomerEntity(id, userRequest);
         customerRepository.save(customerEntity);

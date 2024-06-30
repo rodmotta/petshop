@@ -1,10 +1,10 @@
 package com.github.rodmotta.petshop.clients.keycloak;
 
-import com.github.rodmotta.petshop.clients.keycloak.dtos.request.RoleRequest;
-import com.github.rodmotta.petshop.clients.keycloak.dtos.request.UserRequest;
-import com.github.rodmotta.petshop.clients.keycloak.dtos.response.RoleResponse;
-import com.github.rodmotta.petshop.clients.keycloak.dtos.response.UserResponse;
 import com.github.rodmotta.petshop.configs.interceptor.KeycloakClientInterceptor;
+import com.github.rodmotta.petshop.dtos.requests.RoleKeycloakRequest;
+import com.github.rodmotta.petshop.dtos.requests.UserKeycloakRequest;
+import com.github.rodmotta.petshop.dtos.responses.RoleKeycloakResponse;
+import com.github.rodmotta.petshop.dtos.responses.UserKeycloakResponse;
 import com.github.rodmotta.petshop.errors.handler.FeignClientErrorHandler;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -19,15 +19,15 @@ import java.util.UUID;
 public interface KeycloakAdminClient {
 
     @PostMapping("/users")
-    void createUser(@RequestBody UserRequest userRequest);
+    void createUser(@RequestBody UserKeycloakRequest userRequest);
 
     @GetMapping("/users")
-    List<UserResponse> getUsers(@RequestParam String username);
+    List<UserKeycloakResponse> getUsers(@RequestParam String username);
 
     @GetMapping("/roles")
-    List<RoleResponse> getRealmRoles();
+    List<RoleKeycloakResponse> getRealmRoles();
 
     @PostMapping("/users/{userId}/role-mappings/realm")
     void addRealmRolesToUser(@PathVariable UUID userId,
-                             @RequestBody List<RoleRequest> roles);
+                             @RequestBody List<RoleKeycloakRequest> roles);
 }
