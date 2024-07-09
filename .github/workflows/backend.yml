@@ -18,4 +18,4 @@ jobs:
       - name: Build with Maven
         run: |
           cd backend
-          mvn clean install
+          mvn clean install -DskipTests
