@@ -18,8 +18,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-import static com.github.rodmotta.petshop.dtos.mappers.ProductMapper.modelToResponse;
-import static com.github.rodmotta.petshop.dtos.mappers.ProductMapper.requestToModel;
+import static com.github.rodmotta.petshop.dtos.mappers.ProductMapper.entityToResponse;
+import static com.github.rodmotta.petshop.dtos.mappers.ProductMapper.requestToEntity;
 
 @Service
 @RequiredArgsConstructor
@@ -32,9 +32,9 @@ public class ProductService {
     private String bucket;
 
     public ProductResponse create(ProductRequest productRequest) {
-        ProductEntity product = requestToModel(productRequest);
+        ProductEntity product = requestToEntity(productRequest);
         ProductEntity savedProduct = productRepository.save(product);
-        return modelToResponse(savedProduct);
+        return entityToResponse(savedProduct);
     }
 
     public ProductResponse findById(UUID productId) {
@@ -42,7 +42,7 @@ public class ProductService {
                 .orElseThrow(() -> new NotFoundException("Product not found."));
 
         List<ImageResponse> productImagesResponse = setProductImagesResponse(product);
-        return modelToResponse(product, productImagesResponse);
+        return entityToResponse(product, productImagesResponse);
     }
 
     public Page<ProductResponse> search(Pageable pageable, String name) {
@@ -55,8 +55,8 @@ public class ProductService {
                     .orElse(null);
 
             return Objects.isNull(imageResponse)
-                    ? modelToResponse(product)
-                    : modelToResponse(product, List.of(imageResponse));
+                    ? entityToResponse(product)
+                    : entityToResponse(product, List.of(imageResponse));
         });
     }
 

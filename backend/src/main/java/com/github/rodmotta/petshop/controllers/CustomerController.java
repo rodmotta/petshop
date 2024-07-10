@@ -1,5 +1,6 @@
 package com.github.rodmotta.petshop.controllers;
 
+import com.github.rodmotta.petshop.dtos.requests.AddressRequest;
 import com.github.rodmotta.petshop.dtos.responses.CustomerResponse;
 import com.github.rodmotta.petshop.services.CustomerService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,24 +16,17 @@ import static org.springframework.http.HttpStatus.OK;
 @RequiredArgsConstructor
 public class CustomerController {
 
-    private final CustomerService customerService;
+    private final CustomerService service;
 
     @GetMapping("customer/{customerId}")
     @ResponseStatus(OK)
     public CustomerResponse findById(@PathVariable UUID customerId) {
-        return customerService.findById(customerId);
+        return service.findById(customerId);
     }
 
-    @PostMapping("customer")
+    @PostMapping("customer/{customerId}/address")
     @ResponseStatus(OK)
-    public CustomerResponse create(@PathVariable UUID customerId) {
-        return customerService.findById(customerId);
+    public void addAddress(@PathVariable UUID customerId, @RequestBody AddressRequest addressRequest) {
+        service.addAddress(customerId, addressRequest);
     }
-
-    @GetMapping("customer/{customerId}/address")
-    @ResponseStatus(OK)
-    public CustomerResponse addAddress(@PathVariable UUID customerId) {
-        return customerService.findById(customerId);
-    }
-
 }

@@ -21,18 +21,8 @@ public class CustomerMapper {
                 customerEntity.getLastName(),
                 customerEntity.getEmail(),
                 customerEntity.getAddresses().stream()
-                        .map(CustomerMapper::addressEntityToResponse)
+                        .map(AddressMapper::addressEntityToResponse)
                         .toList()
-        );
-    }
-
-    private static AddressResponse addressEntityToResponse(AddressEntity addressEntity) {
-        return new AddressResponse(
-                addressEntity.getId(),
-                addressEntity.getAddress(),
-                addressEntity.getCity(),
-                addressEntity.getState(),
-                addressEntity.getZipCode()
         );
     }
 

@@ -1,0 +1,46 @@
+package com.github.rodmotta.petshop.dtos.mappers;
+
+import com.github.rodmotta.petshop.dtos.requests.AddressRequest;
+import com.github.rodmotta.petshop.dtos.responses.AddressResponse;
+import com.github.rodmotta.petshop.dtos.responses.ViaCEPResponse;
+import com.github.rodmotta.petshop.persistence.entities.AddressEntity;
+import lombok.NoArgsConstructor;
+
+import java.util.UUID;
+
+import static lombok.AccessLevel.PRIVATE;
+
+@NoArgsConstructor(access = PRIVATE)
+public class AddressMapper {
+
+    public static AddressResponse addressEntityToResponse(AddressEntity addressEntity) {
+        return new AddressResponse(
+                addressEntity.getId(),
+                addressEntity.getStreet(),
+                addressEntity.getDistrict(),
+                addressEntity.getCity(),
+                addressEntity.getState(),
+                addressEntity.getZipCode());
+    }
+
+    public static AddressResponse viaCEPResponseToResponse(ViaCEPResponse viaCEPResponse) {
+        return new AddressResponse(
+                null,
+                viaCEPResponse.logradouro(),
+                viaCEPResponse.bairro(),
+                viaCEPResponse.localidade(),
+                viaCEPResponse.uf(),
+                viaCEPResponse.cep().replace("-", ""));
+    }
+
+    public static AddressEntity addressRequestToEntity(AddressRequest addressRequest, UUID customerId) {
+        return AddressEntity.builder()
+                .street(addressRequest.street())
+                .district(addressRequest.district())
+                .city(addressRequest.city())
+                .state(addressRequest.state())
+                .zipCode(addressRequest.zipcode())
+                .customerId(customerId)
+                .build();
+    }
+}

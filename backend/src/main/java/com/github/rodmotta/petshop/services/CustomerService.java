@@ -1,9 +1,11 @@
 package com.github.rodmotta.petshop.services;
 
 import com.github.rodmotta.petshop.dtos.mappers.CustomerMapper;
+import com.github.rodmotta.petshop.dtos.requests.AddressRequest;
 import com.github.rodmotta.petshop.dtos.requests.CreateUserRequest;
 import com.github.rodmotta.petshop.dtos.responses.CustomerResponse;
 import com.github.rodmotta.petshop.errors.exception.NotFoundException;
+import com.github.rodmotta.petshop.persistence.entities.AddressEntity;
 import com.github.rodmotta.petshop.persistence.entities.CustomerEntity;
 import com.github.rodmotta.petshop.persistence.repositories.AddressRepository;
 import com.github.rodmotta.petshop.persistence.repositories.CustomerRepository;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+import static com.github.rodmotta.petshop.dtos.mappers.AddressMapper.addressRequestToEntity;
 import static com.github.rodmotta.petshop.dtos.mappers.CustomerMapper.userRequestToCustomerEntity;
 
 @Service
@@ -30,5 +33,12 @@ public class CustomerService {
     public void create(UUID id, CreateUserRequest userRequest) {
         CustomerEntity customerEntity = userRequestToCustomerEntity(id, userRequest);
         customerRepository.save(customerEntity);
+    }
+
+    public void addAddress(UUID customerId, AddressRequest addressRequest) {
+        customerRepository.findById(customerId)
+                .orElseThrow(() -> new NotFoundException("Customer not found."));
+        AddressEntity addressEntity = addressRequestToEntity(addressRequest, customerId);
+        addressRepository.save(addressEntity);
     }
 }

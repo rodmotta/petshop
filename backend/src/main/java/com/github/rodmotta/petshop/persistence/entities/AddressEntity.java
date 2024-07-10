@@ -19,12 +19,15 @@ public class AddressEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private String address;
+    private String street;
+    private String district;
     private String city;
     private String state;
     private String zipCode;
+    @Column(name = "customer_id")
+    private UUID customerId;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id", referencedColumnName = "id", insertable = false, updatable = false)
     private CustomerEntity customer;
 }

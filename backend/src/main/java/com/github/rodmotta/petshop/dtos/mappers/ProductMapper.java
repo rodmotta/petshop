@@ -13,7 +13,7 @@ import static lombok.AccessLevel.PRIVATE;
 @NoArgsConstructor(access = PRIVATE)
 public class ProductMapper {
 
-    public static ProductEntity requestToModel(ProductRequest req) {
+    public static ProductEntity requestToEntity(ProductRequest req) {
         return ProductEntity.builder()
                 .name(req.name())
                 .price(req.price())
@@ -21,20 +21,20 @@ public class ProductMapper {
                 .build();
     }
 
-    public static ProductResponse modelToResponse(ProductEntity model) {
+    public static ProductResponse entityToResponse(ProductEntity entity) {
         return new ProductResponse(
-                model.getId(),
-                model.getName(),
-                model.getPrice(),
+                entity.getId(),
+                entity.getName(),
+                entity.getPrice(),
                 null
         );
     }
 
-    public static ProductResponse modelToResponse(ProductEntity model, List<ImageResponse> productImagesResponse) {
+    public static ProductResponse entityToResponse(ProductEntity entity, List<ImageResponse> productImagesResponse) {
         return new ProductResponse(
-                model.getId(),
-                model.getName(),
-                model.getPrice(),
+                entity.getId(),
+                entity.getName(),
+                entity.getPrice(),
                 productImagesResponse
         );
     }
