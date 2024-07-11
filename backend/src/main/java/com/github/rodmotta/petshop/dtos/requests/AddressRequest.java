@@ -1,9 +1,11 @@
 package com.github.rodmotta.petshop.dtos.requests;
 
+import jakarta.validation.constraints.NotBlank;
+
 public record AddressRequest(
-        String street,
-        String district,
-        String city,
-        String state,
-        String zipcode) {
+        @NotBlank String street,
+        @NotBlank String district,
+        @NotBlank String city,
+        @NotBlank String state,
+        @NotBlank String zipcode) {
 }

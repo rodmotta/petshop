@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.github.rodmotta.petshop.enums.Roles.CUSTOMER;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 
@@ -34,7 +35,9 @@ public class SecurityConfig {
                 .csrf(configurer -> configurer.disable())
                 .authorizeHttpRequests(req -> req
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                        .requestMatchers(POST, "/user/token", "/user").permitAll()
+                        .requestMatchers(POST, "/user", "/user/token").permitAll()
+                        .requestMatchers(GET, "/customer").hasRole(CUSTOMER.name())
+                        .requestMatchers("/customer/address/**").hasRole(CUSTOMER.name())
                         .requestMatchers(GET, "/products").permitAll()
                         .requestMatchers(GET, "/products/{productId}").permitAll()
                         .requestMatchers(POST, "/product").hasRole(Roles.EMPLOYEE.name())

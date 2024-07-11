@@ -1,15 +1,17 @@
 package com.github.rodmotta.petshop.controllers;
 
 import com.github.rodmotta.petshop.dtos.requests.AddressRequest;
+import com.github.rodmotta.petshop.dtos.responses.AddressResponse;
 import com.github.rodmotta.petshop.dtos.responses.CustomerResponse;
 import com.github.rodmotta.petshop.services.CustomerService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @Tag(name = "Customers")
@@ -18,15 +20,33 @@ public class CustomerController {
 
     private final CustomerService service;
 
-    @GetMapping("customer/{customerId}")
+    @GetMapping("customer")
     @ResponseStatus(OK)
-    public CustomerResponse findById(@PathVariable UUID customerId) {
-        return service.findById(customerId);
+    public CustomerResponse getCustomer() {
+        return service.getCustomer();
     }
 
-    @PostMapping("customer/{customerId}/address")
+    @GetMapping("customer/address")
     @ResponseStatus(OK)
-    public void addAddress(@PathVariable UUID customerId, @RequestBody AddressRequest addressRequest) {
-        service.addAddress(customerId, addressRequest);
+    public List<AddressResponse> getAddress() {
+        return service.getAddress();
+    }
+
+    @PostMapping("customer/address")
+    @ResponseStatus(CREATED)
+    public void createAddress(@RequestBody AddressRequest addressRequest) {
+        service.createAddress(addressRequest);
+    }
+
+    @PutMapping("customer/address/{addressId}")
+    @ResponseStatus(NO_CONTENT)
+    public void updateAddress(@PathVariable UUID addressId, @RequestBody AddressRequest addressRequest) {
+        service.updateAddress(addressId, addressRequest);
+    }
+
+    @DeleteMapping("customer/address/{addressId}")
+    @ResponseStatus(NO_CONTENT)
+    public void deleteAddress(@PathVariable UUID addressId) {
+        service.deleteAddress(addressId);
     }
 }

@@ -15,7 +15,7 @@ public class UtilityController {
 
     private final UtilityService service;
 
-    @GetMapping("brazil-zipcode/{zipcode}/address")
+    @GetMapping("utility/brazil-zipcode/{zipcode}/address")
     public AddressResponse getBrazilAddressByZipcode(@PathVariable String zipcode) {
         return service.getBrazilAddressByZipcode(zipcode);
     }

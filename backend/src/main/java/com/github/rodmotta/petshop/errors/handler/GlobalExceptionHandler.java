@@ -1,9 +1,6 @@
 package com.github.rodmotta.petshop.errors.handler;
 
-import com.github.rodmotta.petshop.errors.exception.FeignClientException;
-import com.github.rodmotta.petshop.errors.exception.NotFoundException;
-import com.github.rodmotta.petshop.errors.exception.ServiceException;
-import com.github.rodmotta.petshop.errors.exception.UnauthorizedException;
+import com.github.rodmotta.petshop.errors.exception.*;
 import com.github.rodmotta.petshop.errors.response.ErrorResponse;
 import com.github.rodmotta.petshop.errors.response.ValidationResponse;
 import org.springframework.validation.FieldError;
@@ -30,6 +27,14 @@ public class GlobalExceptionHandler {
     @ResponseStatus(UNAUTHORIZED)
     @ExceptionHandler(UnauthorizedException.class)
     public ErrorResponse unauthorizedException(UnauthorizedException exception) {
+        return ErrorResponse.builder()
+                .message(exception.getMessage())
+                .build();
+    }
+
+    @ResponseStatus(FORBIDDEN)
+    @ExceptionHandler(ForbiddenException.class)
+    public ErrorResponse forbiddenException(ForbiddenException exception) {
         return ErrorResponse.builder()
                 .message(exception.getMessage())
                 .build();

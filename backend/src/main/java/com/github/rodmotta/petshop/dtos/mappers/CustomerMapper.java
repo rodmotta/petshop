@@ -1,9 +1,7 @@
 package com.github.rodmotta.petshop.dtos.mappers;
 
 import com.github.rodmotta.petshop.dtos.requests.CreateUserRequest;
-import com.github.rodmotta.petshop.dtos.responses.AddressResponse;
 import com.github.rodmotta.petshop.dtos.responses.CustomerResponse;
-import com.github.rodmotta.petshop.persistence.entities.AddressEntity;
 import com.github.rodmotta.petshop.persistence.entities.CustomerEntity;
 import lombok.NoArgsConstructor;
 
@@ -19,10 +17,7 @@ public class CustomerMapper {
                 customerEntity.getId(),
                 customerEntity.getFirstName(),
                 customerEntity.getLastName(),
-                customerEntity.getEmail(),
-                customerEntity.getAddresses().stream()
-                        .map(AddressMapper::addressEntityToResponse)
-                        .toList()
+                customerEntity.getEmail()
         );
     }
 
