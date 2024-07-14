@@ -1,4 +1,4 @@
-package com.github.rodmotta.petshop.controllers;
+package com.github.rodmotta.petshop.resources;
 
 import com.github.rodmotta.petshop.dtos.requests.CreateUserRequest;
 import com.github.rodmotta.petshop.dtos.requests.UserCredentialRequest;
@@ -18,7 +18,7 @@ import static org.springframework.http.HttpStatus.OK;
 @RestController
 @Tag(name = "Users")
 @RequiredArgsConstructor
-public class UserController {
+public class UserResource {
 
     private final UserService service;
 

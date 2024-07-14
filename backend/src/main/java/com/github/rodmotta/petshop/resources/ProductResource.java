@@ -1,4 +1,4 @@
-package com.github.rodmotta.petshop.controllers;
+package com.github.rodmotta.petshop.resources;
 
 import com.github.rodmotta.petshop.dtos.requests.ProductRequest;
 import com.github.rodmotta.petshop.dtos.responses.ProductResponse;
@@ -21,7 +21,7 @@ import static org.springframework.http.HttpStatus.OK;
 @RestController
 @Tag(name = "Products")
 @RequiredArgsConstructor
-public class ProductController {
+public class ProductResource {
 
     private final ProductService productService;
     private final ImageService imageService;

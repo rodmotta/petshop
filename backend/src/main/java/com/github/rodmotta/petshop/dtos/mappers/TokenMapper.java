@@ -16,7 +16,6 @@ public class TokenMapper {
                 keycloakToken.access_token(),
                 LocalDateTime.now().plusSeconds(keycloakToken.expires_in()),
                 keycloakToken.refresh_token(),
-                LocalDateTime.now().plusSeconds(keycloakToken.refresh_expires_in())
-        );
+                LocalDateTime.now().plusSeconds(keycloakToken.refresh_expires_in()));
     }
 }

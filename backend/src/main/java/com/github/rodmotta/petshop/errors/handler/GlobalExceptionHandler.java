@@ -1,8 +1,8 @@
 package com.github.rodmotta.petshop.errors.handler;
 
 import com.github.rodmotta.petshop.errors.exception.*;
-import com.github.rodmotta.petshop.errors.response.ErrorResponse;
-import com.github.rodmotta.petshop.errors.response.ValidationResponse;
+import com.github.rodmotta.petshop.dtos.responses.ErrorResponse;
+import com.github.rodmotta.petshop.dtos.responses.ValidationResponse;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -61,14 +61,6 @@ public class GlobalExceptionHandler {
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(ServiceException.class)
     public ErrorResponse serviceException(ServiceException exception) {
-        return ErrorResponse.builder()
-                .message(exception.getMessage())
-                .build();
-    }
-
-    @ResponseStatus(BAD_REQUEST)
-    @ExceptionHandler(FeignClientException.class)
-    public ErrorResponse feignClientException(FeignClientException exception) {
         return ErrorResponse.builder()
                 .message(exception.getMessage())
                 .build();

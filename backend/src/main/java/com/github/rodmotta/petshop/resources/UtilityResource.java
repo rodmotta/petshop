@@ -1,4 +1,4 @@
-package com.github.rodmotta.petshop.controllers;
+package com.github.rodmotta.petshop.resources;
 
 import com.github.rodmotta.petshop.dtos.responses.AddressResponse;
 import com.github.rodmotta.petshop.services.UtilityService;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Tag(name = "Utilities")
 @RequiredArgsConstructor
-public class UtilityController {
+public class UtilityResource {
 
     private final UtilityService service;
 

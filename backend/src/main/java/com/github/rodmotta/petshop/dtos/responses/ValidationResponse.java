@@ -1,4 +1,4 @@
-package com.github.rodmotta.petshop.errors.response;
+package com.github.rodmotta.petshop.dtos.responses;
 
 import lombok.Builder;
 import lombok.Data;

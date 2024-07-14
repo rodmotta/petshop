@@ -1,6 +1,6 @@
 package com.github.rodmotta.petshop.services;
 
-import com.github.rodmotta.petshop.clients.aws.AWSS3Client;
+import com.github.rodmotta.petshop.clients.AWSS3Client;
 import com.github.rodmotta.petshop.dtos.requests.ProductRequest;
 import com.github.rodmotta.petshop.dtos.responses.ImageResponse;
 import com.github.rodmotta.petshop.dtos.responses.ProductResponse;

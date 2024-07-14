@@ -1,4 +1,4 @@
-package com.github.rodmotta.petshop.controllers;
+package com.github.rodmotta.petshop.resources;
 
 import com.github.rodmotta.petshop.dtos.requests.AddressRequest;
 import com.github.rodmotta.petshop.dtos.responses.AddressResponse;
@@ -16,7 +16,7 @@ import static org.springframework.http.HttpStatus.*;
 @RestController
 @Tag(name = "Customers")
 @RequiredArgsConstructor
-public class CustomerController {
+public class CustomerResource {
 
     private final CustomerService service;
 

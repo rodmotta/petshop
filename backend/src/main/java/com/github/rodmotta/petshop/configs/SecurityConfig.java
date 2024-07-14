@@ -36,10 +36,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req -> req
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .requestMatchers(POST, "/user", "/user/token").permitAll()
+                        .requestMatchers(GET, "/products", "/products/{productId}").permitAll()
                         .requestMatchers(GET, "/customer").hasRole(CUSTOMER.name())
                         .requestMatchers("/customer/address/**").hasRole(CUSTOMER.name())
-                        .requestMatchers(GET, "/products").permitAll()
-                        .requestMatchers(GET, "/products/{productId}").permitAll()
                         .requestMatchers(POST, "/product").hasRole(Roles.EMPLOYEE.name())
                         .requestMatchers(POST, "/product/{productId}/image").hasRole(Roles.EMPLOYEE.name())
                         .anyRequest().authenticated())
@@ -50,7 +49,7 @@ public class SecurityConfig {
                 .build();
     }
 
-    public JwtAuthenticationConverter jwtAuthenticationConverter() {
+    private JwtAuthenticationConverter jwtAuthenticationConverter() {
         Converter<Jwt, Collection<GrantedAuthority>> jwtGrantedAuthoritiesConverter = jwt -> {
             Map<String, Collection<String>> realmAccess = jwt.getClaim("realm_access");
             Collection<String> roles = realmAccess.get("roles");

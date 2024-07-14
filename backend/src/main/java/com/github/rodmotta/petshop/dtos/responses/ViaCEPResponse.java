@@ -5,6 +5,7 @@ public record ViaCEPResponse(
         String bairro,
         String localidade,
         String uf,
-        String cep
+        String cep,
+        String erro //apenas usado quando CEP buscado nao tem registro
 ) {
 }

@@ -1,4 +1,4 @@
-package com.github.rodmotta.petshop.errors.response;
+package com.github.rodmotta.petshop.dtos.responses;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;

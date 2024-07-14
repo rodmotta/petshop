@@ -1,4 +1,4 @@
-package com.github.rodmotta.petshop.clients.aws;
+package com.github.rodmotta.petshop.clients;
 
 import com.amazonaws.services.s3.AmazonS3;
 import org.springframework.stereotype.Component;

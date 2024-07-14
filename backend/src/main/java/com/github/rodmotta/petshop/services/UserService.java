@@ -1,7 +1,6 @@
 package com.github.rodmotta.petshop.services;
 
-import com.github.rodmotta.petshop.clients.keycloak.KeycloakAdminClient;
-import com.github.rodmotta.petshop.clients.keycloak.KeycloakClient;
+import com.github.rodmotta.petshop.clients.KeycloakClient;
 import com.github.rodmotta.petshop.dtos.requests.CreateUserRequest;
 import com.github.rodmotta.petshop.dtos.requests.RoleKeycloakRequest;
 import com.github.rodmotta.petshop.dtos.requests.UserCredentialRequest;
@@ -23,7 +22,6 @@ import static com.github.rodmotta.petshop.enums.Roles.CUSTOMER;
 @RequiredArgsConstructor
 public class UserService {
 
-    private final KeycloakAdminClient keycloakAdminClient;
     private final KeycloakClient keycloakClient;
     private final CustomerService customerService;
 
@@ -34,21 +32,21 @@ public class UserService {
 
     public void create(CreateUserRequest createUserRequest) {
         UserKeycloakRequest userRequest = requestToKeycloakRequest(createUserRequest);
-        keycloakAdminClient.createUser(userRequest);
+        keycloakClient.createUser(userRequest);
 
-        List<UserKeycloakResponse> users = keycloakAdminClient.getUsers(createUserRequest.username());
+        List<UserKeycloakResponse> users = keycloakClient.getUsers(createUserRequest.username());
         UserKeycloakResponse user = users.stream()
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException()); //todo - handling
 
-        List<RoleKeycloakResponse> roles = keycloakAdminClient.getRealmRoles();
+        List<RoleKeycloakResponse> roles = keycloakClient.getRealmRoles();
         RoleKeycloakResponse role = roles.stream()
                 .filter(r -> r.name().equals(CUSTOMER.name()))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException()); //todo - handling
 
         RoleKeycloakRequest roleRequest = new RoleKeycloakRequest(role.id(), CUSTOMER.name());
-        keycloakAdminClient.addRealmRolesToUser(user.id(), List.of(roleRequest));
+        keycloakClient.addRealmRolesToUser(user.id(), List.of(roleRequest));
 
         customerService.create(user.id(), createUserRequest);
     }
