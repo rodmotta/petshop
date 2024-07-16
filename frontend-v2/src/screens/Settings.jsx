@@ -5,37 +5,23 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, } from "@/components/ui/card"
 import { Navbar } from "../components/Navbar"
 
-export function Settings() {
+import { getCustomerAddreses } from '../services/customerService'
+import { useEffect, useState } from "react"
 
-    const adresses = [
-        {
-            id: "2a4cfdf2-6334-4689-becb-40f5f1c4ff0d",
-            zipCode: "79082020",
-            street: "Rua Betim",
-            number: 123,
-            district: "Guanandi II",
-            city: "Campo Grande",
-            state: "MS"
-        },
-        {
-            id: "d96a5310-17db-4a84-9b20-3d3c1a54fe2a",
-            zipCode: "84060647",
-            street: "Rua Praia de Ipanema",
-            number: 123,
-            district: "Contorno",
-            city: "Ponta Grossa",
-            state: "PR"
-        },
-        {
-            id: "f39ab22c-c1c9-435b-8792-6753621e3bbf",
-            zipCode: "69907840",
-            street: "Rua das Flores",
-            number: 123,
-            district: "Belo Jardim I",
-            city: "Rio Branco",
-            state: "AC"
-        }
-    ]
+export function Settings() {
+    const [addreses, setAddreses] = useState([])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const addreses = await getCustomerAddreses()
+                setAddreses(addreses)
+            } catch (error) {
+                console.error('Erro ao buscar os produtos:', error);
+            }
+        };
+        fetchData();
+    }, []);
 
     return (
         <>
@@ -101,8 +87,8 @@ export function Settings() {
                             </Dialog>
                         </div>
 
-                        {adresses.map(address => (
-                            <Card>
+                        {addreses.map(address => (
+                            <Card key={address.id}>
                                 <CardHeader className='p-4 pb-0'>
                                     <CardTitle>{`${address.street}, ${address.number}`}</CardTitle>
                                 </CardHeader>

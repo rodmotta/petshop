@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom"
 import { ShoppingCart, User, LogIn, Trash2, Minus, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
@@ -6,6 +7,8 @@ import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHe
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, } from "@/components/ui/card"
 
 export function Navbar() {
+
+    const navigate = useNavigate()
 
     let isLogged = true
 
@@ -65,12 +68,12 @@ export function Navbar() {
                     <DropdownMenuItem>
                         Meus pedidos
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/settings")}>
                         Meus endereços
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate("/login")}>
                     Sair
                 </DropdownMenuItem>
             </DropdownMenuContent>
