@@ -1,15 +1,30 @@
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, } from "@/components/ui/card"
 import { Navbar } from "../components/Navbar"
 
 import { getCustomerAddreses } from '../services/customerService'
+import { getAddressByZipcode } from '../services/utilityService'
 import { useEffect, useState } from "react"
+import { AddressDialog } from "@/components/AddressDialog"
+
+
 
 export function Settings() {
     const [addreses, setAddreses] = useState([])
+    const [zipcode, setZipcode] = useState(null)
+    const [address, setAddress] = useState({})
+    const [zipCodeLoading, setZipCodeLoading] = useState(false)
+
+    const handleZipcode = async (zipcode) => {
+        const address = await getAddressByZipcode(zipcode)
+        setAddress(address)
+    }
+
+    const handleAddressNumber = async (event) => {
+        const value = event.target.value
+        address.number = value
+        setAddress(address)
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -37,54 +52,7 @@ export function Settings() {
                     <div className="col-span-5 flex flex-col gap-4">
 
                         <div className='flex justify-end'>
-                            <Dialog>
-                                <DialogTrigger>
-                                    <Button>Adicionar endereço</Button>
-                                </DialogTrigger>
-                                <DialogContent className='sm:max-w-[425px]'>
-                                    <DialogHeader>
-                                        <DialogTitle>Novo endereço</DialogTitle>
-                                        <DialogDescription>
-                                            <div className="my-4">
-                                                <Label htmlFor="">CEP</Label>
-                                                <Input />
-                                            </div>
-                                            <div className="mb-4">
-                                                <Label htmlFor="">Endereço</Label>
-                                                <Input />
-                                            </div>
-                                            <div className="flex gap-4">
-                                                <div className="mb-4">
-                                                    <Label htmlFor="">Número</Label>
-                                                    <Input />
-                                                </div>
-                                                <div className="mb-4">
-                                                    <Label htmlFor="">Bairro</Label>
-                                                    <Input />
-                                                </div>
-                                            </div>
-                                            <div className="mb-4">
-                                                <Label htmlFor="">Complemento</Label>
-                                                <Input />
-                                            </div>
-                                            <div className="flex gap-4">
-                                                <div>
-                                                    <Label htmlFor="">Cidade</Label>
-                                                    <Input />
-                                                </div>
-                                                <div>
-                                                    <Label htmlFor="">Estado</Label>
-                                                    <Input />
-                                                </div>
-                                            </div>
-                                        </DialogDescription>
-                                    </DialogHeader>
-                                    <DialogFooter>
-                                        <Button type="" variant='outline'>Cancelar</Button>
-                                        <Button type="submit">Adicionar</Button>
-                                    </DialogFooter>
-                                </DialogContent>
-                            </Dialog>
+                            <AddressDialog/>
                         </div>
 
                         {addreses.map(address => (

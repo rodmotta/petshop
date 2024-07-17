@@ -1,7 +1,13 @@
+import { AddressDialog } from "@/components/AddressDialog";
 import { Navbar } from "@/components/Navbar";
 
 export function Main() {
     return (
-        <Navbar />
+        <>
+            <Navbar />
+            <AddressDialog
+                buttonText='Adicionar endereço'
+                title='Novo endereço' />
+        </>
     )
 }
