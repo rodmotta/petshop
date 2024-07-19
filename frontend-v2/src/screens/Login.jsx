@@ -3,54 +3,67 @@ import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, } from "@/components/ui/card"
 
-import { LoaderCircle } from "lucide-react"
+import { LoaderCircle, EyeOff, Eye } from "lucide-react"
 
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useForm } from "react-hook-form"
 
 import { getToken } from '../services/authService'
 
 export function Login() {
 
+    const { register, handleSubmit } = useForm()
+
     const navigate = useNavigate()
 
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
     const [isLoading, setLoading] = useState(false)
+    const [showPassword, setShowPassword] = useState(false);
 
-    const handleSubmit = async (event) => {
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const onSubmit = async (data) => {
         setLoading(true)
-        event.preventDefault()
-
         try {
-            await getToken(username, password)
-            navigate("/")
-        } catch (error) {
-            console.log(error)
+            await getToken(data)
+            navigate('/')
+        } finally {
             setLoading(false)
         }
     }
 
     return (
-        <div className="m-8 flex justify-center">
+        <div className="my-8 mx-4 flex justify-center">
             <Card className="w-96">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <CardHeader>
                         <CardTitle>Login</CardTitle>
                     </CardHeader>
-                    <CardContent>
-                        <div className="mb-4">
-                            <Label>Email</Label>
-                            <Input type="text" onChange={event => setUsername(event.target.value)} />
+                    <CardContent className="flex flex-col gap-2">
+                        <div>
+                            <Label>Usuário</Label>
+                            <Input type="text" {...register('username')} />
                         </div>
                         <div>
                             <Label>Senha</Label>
-                            <Input type="password" onChange={event => setPassword(event.target.value)} />
+                            <div className="relative">
+                                <Input type={showPassword ? "text" : "password"} className='pr-10' {...register('password')} />
+                                <Button
+                                    type="button"
+                                    variant="ghost"
+                                    className="absolute right-0 top-0 px-2 hover:bg-transparent"
+                                    onClick={togglePasswordVisibility}
+                                >
+                                    {showPassword ? <Eye /> : <EyeOff />}
+                                </Button>
+                            </div>
                         </div>
                     </CardContent>
                     <CardFooter>
                         {isLoading
-                            ? <Button disabled className="w-full"><LoaderCircle className="animate-spin" /></Button>
+                            ? <Button className="w-full" disabled><LoaderCircle className="animate-spin" /></Button>
                             : <Button className="w-full" type="submit">Entrar</Button>}
                     </CardFooter>
                 </form>
