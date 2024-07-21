@@ -1,6 +1,6 @@
 package com.github.rodmotta.petshop.errors.handler;
 
-import com.github.rodmotta.petshop.errors.exception.*;
+import com.github.rodmotta.petshop.errors.exceptions.*;
 import com.github.rodmotta.petshop.dtos.responses.ErrorResponse;
 import com.github.rodmotta.petshop.dtos.responses.ValidationResponse;
 import org.springframework.validation.FieldError;

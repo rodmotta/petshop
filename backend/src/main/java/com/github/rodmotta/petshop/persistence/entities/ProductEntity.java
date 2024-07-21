@@ -21,7 +21,10 @@ public class ProductEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private UUID id; //id da versao do produto
+    private UUID code; //codigo de busca do produto
+    @Column(nullable = false)
+    private Boolean lastVersion;
     @Column(nullable = false)
     private String name;
     private BigDecimal price;

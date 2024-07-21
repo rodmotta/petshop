@@ -20,6 +20,7 @@ public class AddressEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String street;
+    private Integer number;
     private String district;
     private String city;
     private String state;

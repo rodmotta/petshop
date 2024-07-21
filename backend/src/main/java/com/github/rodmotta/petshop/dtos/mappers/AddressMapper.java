@@ -17,6 +17,7 @@ public class AddressMapper {
         return new AddressResponse(
                 addressEntity.getId(),
                 addressEntity.getStreet(),
+                addressEntity.getNumber(),
                 addressEntity.getDistrict(),
                 addressEntity.getCity(),
                 addressEntity.getState(),
@@ -27,6 +28,7 @@ public class AddressMapper {
         return new AddressResponse(
                 null,
                 viaCEPResponse.logradouro(),
+                null,
                 viaCEPResponse.bairro(),
                 viaCEPResponse.localidade(),
                 viaCEPResponse.uf(),
@@ -36,6 +38,7 @@ public class AddressMapper {
     public static AddressEntity addressRequestToEntity(AddressRequest addressRequest, UUID customerId) {
         return AddressEntity.builder()
                 .street(addressRequest.street())
+                .number(addressRequest.number())
                 .district(addressRequest.district())
                 .city(addressRequest.city())
                 .state(addressRequest.state())

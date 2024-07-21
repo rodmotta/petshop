@@ -15,8 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
 
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @Tag(name = "Products")
@@ -26,17 +25,23 @@ public class ProductResource {
     private final ProductService productService;
     private final ImageService imageService;
 
-    @PostMapping("product")
-    @ResponseStatus(CREATED)
-    public ProductResponse create(@RequestBody @Valid ProductRequest productRequest) {
-        return productService.create(productRequest);
-    }
-
     @GetMapping("products")
     @ResponseStatus(OK)
     public Page<ProductResponse> search(@PageableDefault Pageable pageable,
                                         @RequestParam(required = false) String name) {
         return productService.search(pageable, name);
+    }
+
+    @PostMapping("product")
+    @ResponseStatus(CREATED)
+    public void createProduct(@RequestBody @Valid ProductRequest productRequest) {
+        productService.createProduct(productRequest);
+    }
+
+    @PutMapping("product/{productCode}")
+    @ResponseStatus(NO_CONTENT)
+    public void updadteProduct(@PathVariable UUID productCode, @RequestBody @Valid ProductRequest productRequest) {
+        productService.updadteProduct(productCode, productRequest);
     }
 
     @GetMapping("product/{productId}")

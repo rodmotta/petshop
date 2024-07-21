@@ -6,29 +6,25 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle, } from "@/compone
 import { LoaderCircle, EyeOff, Eye } from "lucide-react"
 
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+
 import { useForm } from "react-hook-form"
 
-import { getToken } from '../services/authService'
+import useAuth from "@/hooks/useAuth"
 
 export function Login() {
 
     const { register, handleSubmit } = useForm()
-
-    const navigate = useNavigate()
+    const { login } = useAuth()
 
     const [isLoading, setLoading] = useState(false)
     const [showPassword, setShowPassword] = useState(false);
 
-    const togglePasswordVisibility = () => {
-        setShowPassword(!showPassword);
-    };
+    const togglePasswordVisibility = () => setShowPassword(!showPassword)
 
     const onSubmit = async (data) => {
         setLoading(true)
         try {
-            await getToken(data)
-            navigate('/')
+            await login(data)
         } finally {
             setLoading(false)
         }

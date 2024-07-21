@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Settings } from "./screens/Settings";
-import { Main } from "./screens/Main";
-import { Login } from "./screens/Login";
+import { Settings } from "./pages/Settings";
+import { Main } from "./pages/Main";
+import { Login } from "./pages/Login";
 
 export function App() {
 

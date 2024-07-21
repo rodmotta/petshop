@@ -5,7 +5,9 @@ import com.github.rodmotta.petshop.dtos.responses.AddressResponse;
 import com.github.rodmotta.petshop.dtos.responses.CustomerResponse;
 import com.github.rodmotta.petshop.services.CustomerService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,21 +28,21 @@ public class CustomerResource {
         return service.getCustomer();
     }
 
-    @GetMapping("customer/address")
+    @GetMapping("customer/adresses")
     @ResponseStatus(OK)
-    public List<AddressResponse> getAddress() {
-        return service.getAddress();
+    public List<AddressResponse> getAdresses() {
+        return service.getAdresses();
     }
 
     @PostMapping("customer/address")
     @ResponseStatus(CREATED)
-    public void createAddress(@RequestBody AddressRequest addressRequest) {
+    public void createAddress(@RequestBody @Valid AddressRequest addressRequest) {
         service.createAddress(addressRequest);
     }
 
     @PutMapping("customer/address/{addressId}")
     @ResponseStatus(NO_CONTENT)
-    public void updateAddress(@PathVariable UUID addressId, @RequestBody AddressRequest addressRequest) {
+    public void updateAddress(@PathVariable UUID addressId, @RequestBody @Valid AddressRequest addressRequest) {
         service.updateAddress(addressId, addressRequest);
     }
 

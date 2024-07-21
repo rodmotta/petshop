@@ -22,8 +22,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.github.rodmotta.petshop.enums.Roles.CUSTOMER;
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.*;
 
 @Configuration
 @EnableWebSecurity
@@ -37,9 +36,12 @@ public class SecurityConfig {
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .requestMatchers(POST, "/user", "/user/token").permitAll()
                         .requestMatchers(GET, "/products", "/products/{productId}").permitAll()
+                        .requestMatchers(GET, "/utility/brazil-zipcode/{zipcode}/address").permitAll()
                         .requestMatchers(GET, "/customer").hasRole(CUSTOMER.name())
                         .requestMatchers("/customer/address/**").hasRole(CUSTOMER.name())
+                        .requestMatchers(GET, "/customer/adresses").hasRole(CUSTOMER.name())
                         .requestMatchers(POST, "/product").hasRole(Roles.EMPLOYEE.name())
+                        .requestMatchers(PUT, "/product/{productCode}").hasRole(Roles.EMPLOYEE.name())
                         .requestMatchers(POST, "/product/{productId}/image").hasRole(Roles.EMPLOYEE.name())
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(configurer -> configurer
@@ -65,7 +67,7 @@ public class SecurityConfig {
 
     private CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedHeaders(List.of("Content-Type" /*"Authorization", "Cache-Control"*/));
+        configuration.setAllowedHeaders(List.of("Content-Type", "Authorization" /*"Cache-Control"*/));
         configuration.setAllowedOrigins(List.of("http://localhost:5173"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
 //        configuration.setAllowCredentials(true);

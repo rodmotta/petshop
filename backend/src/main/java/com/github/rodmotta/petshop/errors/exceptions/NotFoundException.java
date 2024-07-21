@@ -1,4 +1,4 @@
-package com.github.rodmotta.petshop.errors.exception;
+package com.github.rodmotta.petshop.errors.exceptions;
 
 public class NotFoundException extends RuntimeException {
 

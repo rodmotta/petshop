@@ -6,9 +6,9 @@ import com.github.rodmotta.petshop.dtos.requests.AddressRequest;
 import com.github.rodmotta.petshop.dtos.requests.CreateUserRequest;
 import com.github.rodmotta.petshop.dtos.responses.AddressResponse;
 import com.github.rodmotta.petshop.dtos.responses.CustomerResponse;
-import com.github.rodmotta.petshop.errors.exception.ForbiddenException;
-import com.github.rodmotta.petshop.errors.exception.NotFoundException;
-import com.github.rodmotta.petshop.errors.exception.ServiceException;
+import com.github.rodmotta.petshop.errors.exceptions.ForbiddenException;
+import com.github.rodmotta.petshop.errors.exceptions.NotFoundException;
+import com.github.rodmotta.petshop.errors.exceptions.ServiceException;
 import com.github.rodmotta.petshop.persistence.entities.AddressEntity;
 import com.github.rodmotta.petshop.persistence.entities.CustomerEntity;
 import com.github.rodmotta.petshop.persistence.repositories.AddressRepository;
@@ -41,7 +41,7 @@ public class CustomerService {
         customerRepository.save(customerEntity);
     }
 
-    public List<AddressResponse> getAddress() {
+    public List<AddressResponse> getAdresses() {
         CustomerEntity loggedCustomer = getLoggedCustomer();
 
         return loggedCustomer.getAddresses()
@@ -63,6 +63,7 @@ public class CustomerService {
         AddressEntity addressEntity = getCustomerAddressValidated(addressId);
 
         addressEntity.setStreet(addressRequest.street());
+        addressEntity.setNumber(addressRequest.number());
         addressEntity.setDistrict(addressRequest.district());
         addressEntity.setCity(addressRequest.city());
         addressEntity.setState(addressRequest.state());

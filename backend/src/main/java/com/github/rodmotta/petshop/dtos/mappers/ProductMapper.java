@@ -26,8 +26,7 @@ public class ProductMapper {
                 entity.getId(),
                 entity.getName(),
                 entity.getPrice(),
-                null
-        );
+                null);
     }
 
     public static ProductResponse entityToResponse(ProductEntity entity, List<ImageResponse> productImagesResponse) {
@@ -35,7 +34,6 @@ public class ProductMapper {
                 entity.getId(),
                 entity.getName(),
                 entity.getPrice(),
-                productImagesResponse
-        );
+                productImagesResponse);
     }
 }

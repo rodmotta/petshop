@@ -1,18 +1,12 @@
-import { useNavigate } from "react-router-dom"
-import { ShoppingCart, User, LogIn, Trash2, Minus, Plus } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger, } from "@/components/ui/sheet"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, } from "@/components/ui/card"
+import { ShoppingCart, Trash2, Minus, Plus } from "lucide-react"
 
-export function Navbar() {
-
-    const navigate = useNavigate()
-
-    let isLogged = true
-
-    const openCart =
+export function CartDrawer() {
+    
+    return (
         <Sheet>
             <SheetTrigger asChild>
                 <Button className='px-2 bg-black hover:bg-zinc-700'>
@@ -55,38 +49,5 @@ export function Navbar() {
                 </SheetFooter>
             </SheetContent>
         </Sheet>
-
-    const profileOptions =
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button className='px-2 bg-black hover:bg-zinc-700'>
-                    <User className="text-white" size={28} />
-                </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
-                <DropdownMenuGroup>
-                    <DropdownMenuItem>
-                        Meus pedidos
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate("/settings")}>
-                        Meus endereços
-                    </DropdownMenuItem>
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => navigate("/login")}>
-                    Sair
-                </DropdownMenuItem>
-            </DropdownMenuContent>
-        </DropdownMenu>
-
-    return (
-        <nav className="flex justify-end bg-black p-3 gap-2">
-            {openCart}
-            {isLogged
-                ? profileOptions
-                : <Button className='px-2 bg-black hover:bg-zinc-700'>
-                    <LogIn className="text-white" size={28} />
-                </Button>}
-        </nav>
     )
 }

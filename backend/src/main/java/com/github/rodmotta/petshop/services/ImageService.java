@@ -1,8 +1,8 @@
 package com.github.rodmotta.petshop.services;
 
 import com.github.rodmotta.petshop.clients.AWSS3Client;
-import com.github.rodmotta.petshop.errors.exception.NotFoundException;
-import com.github.rodmotta.petshop.errors.exception.ServiceException;
+import com.github.rodmotta.petshop.errors.exceptions.NotFoundException;
+import com.github.rodmotta.petshop.errors.exceptions.ServiceException;
 import com.github.rodmotta.petshop.persistence.entities.ImageEntity;
 import com.github.rodmotta.petshop.persistence.entities.ProductEntity;
 import com.github.rodmotta.petshop.persistence.repositories.ImageRepository;

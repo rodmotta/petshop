@@ -1,9 +1,9 @@
-import { Navbar } from "../components/Navbar"
+import { Navbar } from "@/features/navbar/Navbar"
 
 import { getCustomerAddreses } from '../services/customerService'
 import { useEffect, useState } from "react"
-import { AddressCard } from "@/components/address/AddressCard"
-import { AddressFormDialog } from "@/components/address/AddressFormDialog"
+import { AddressCard } from "@/features/address/AddressCard"
+import { AddressFormDialog } from "@/features/address/AddressFormDialog"
 
 export function Settings() {
     const [addreses, setAddreses] = useState([])

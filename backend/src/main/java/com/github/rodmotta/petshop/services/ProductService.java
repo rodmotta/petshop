@@ -4,10 +4,11 @@ import com.github.rodmotta.petshop.clients.AWSS3Client;
 import com.github.rodmotta.petshop.dtos.requests.ProductRequest;
 import com.github.rodmotta.petshop.dtos.responses.ImageResponse;
 import com.github.rodmotta.petshop.dtos.responses.ProductResponse;
-import com.github.rodmotta.petshop.errors.exception.NotFoundException;
+import com.github.rodmotta.petshop.errors.exceptions.NotFoundException;
 import com.github.rodmotta.petshop.persistence.entities.ImageEntity;
 import com.github.rodmotta.petshop.persistence.entities.ProductEntity;
 import com.github.rodmotta.petshop.persistence.repositories.ProductRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Example;
@@ -31,10 +32,24 @@ public class ProductService {
     @Value("${aws.s3.image-bucket}")
     private String bucket;
 
-    public ProductResponse create(ProductRequest productRequest) {
+    public void createProduct(ProductRequest productRequest) {
         ProductEntity product = requestToEntity(productRequest);
-        ProductEntity savedProduct = productRepository.save(product);
-        return entityToResponse(savedProduct);
+        product.setCode(UUID.randomUUID());
+        product.setLastVersion(true);
+        productRepository.save(product);
+    }
+
+    @Transactional
+    public void updadteProduct(UUID productCode, ProductRequest productRequest) {
+        ProductEntity product = productRepository.findByCodeAndLastVersionTrue(productCode)
+                .orElseThrow(() -> new NotFoundException("Product not found"));
+        product.setLastVersion(false);
+        productRepository.save(product);
+
+        ProductEntity newProduct = requestToEntity(productRequest);
+        newProduct.setCode(productCode);
+        newProduct.setLastVersion(true);
+        productRepository.save(newProduct);
     }
 
     public ProductResponse findById(UUID productId) {
