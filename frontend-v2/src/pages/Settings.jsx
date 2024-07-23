@@ -4,17 +4,28 @@ import { getCustomerAddreses } from '../services/customerService'
 import { useEffect, useState } from "react"
 import { AddressCard } from "@/features/address/AddressCard"
 import { AddressFormDialog } from "@/features/address/AddressFormDialog"
+import useAuth from "@/hooks/useAuth"
 
 export function Settings() {
     const [addreses, setAddreses] = useState([])
+    const { isValidToken, logout } = useAuth()
 
     useEffect(() => {
-        const fetchAddreses = async () => {
-            const addreses = await getCustomerAddreses()
-            setAddreses(addreses)
-        };
-        fetchAddreses();
+        if (isValidToken()) {
+            const fetchAddreses = async () => {
+                const addreses = await getCustomerAddreses()
+                setAddreses(addreses)
+            };
+            fetchAddreses()
+            return
+        }
+        logout()
     }, []);
+
+    const handleWhenWrite = async () => {
+        const updatedAddreses = await getCustomerAddreses();
+        setAddreses(updatedAddreses);
+    }
 
     return (
         <>
@@ -30,11 +41,11 @@ export function Settings() {
                     <div className="col-span-5 flex flex-col gap-4">
 
                         <div className='flex justify-end'>
-                            <AddressFormDialog buttonText={'Adicionar'} title={'Novo endereço'} />
+                            <AddressFormDialog buttonText={'Adicionar'} title={'Novo endereço'} whenWrite={handleWhenWrite} />
                         </div>
 
                         {addreses.map(address => (
-                            <AddressCard address={address} />
+                            <AddressCard key={address.id} address={address} whenWrite={handleWhenWrite} />
                         ))}
 
                     </div>
