@@ -14,14 +14,14 @@ import static jakarta.persistence.FetchType.LAZY;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "animals")
-public class AnimalEntity {
+@Table(name = "pets")
+public class PetEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String name;
 
-    @OneToMany(mappedBy = "animal", fetch = LAZY)
+    @OneToMany(mappedBy = "pet", fetch = LAZY)
     private List<ProductEntity> products;
 }

@@ -28,8 +28,8 @@ public class ProductEntity {
     @Column(nullable = false)
     private String name;
     private BigDecimal price;
-    @Column(name = "animal_id")
-    private UUID animalId;
+    @Column(name = "pet_id")
+    private UUID petId;
     @Column(name = "category_id")
     private UUID categoryId;
     @Column(name = "brand_id")
@@ -38,8 +38,8 @@ public class ProductEntity {
     @OneToMany(mappedBy = "product", fetch = LAZY)
     private List<ImageEntity> images;
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "animal_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private AnimalEntity animal;
+    @JoinColumn(name = "pet_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private PetEntity pet;
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "category_id", referencedColumnName = "id", insertable = false, updatable = false)
     private CategoryEntity category;
