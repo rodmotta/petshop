@@ -1,8 +1,8 @@
-package com.github.rodmotta.petshop.persistence.entities;
+package com.github.rodmotta.petshop.v2.adapters.persistence.entity;
 
 import com.github.rodmotta.petshop.enums.OrderStatus;
+import com.github.rodmotta.petshop.persistence.entities.CustomerEntity;
 import jakarta.persistence.*;
-import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -11,11 +11,6 @@ import java.util.UUID;
 
 import static jakarta.persistence.FetchType.LAZY;
 
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "orders")
 public class OrderEntity {
