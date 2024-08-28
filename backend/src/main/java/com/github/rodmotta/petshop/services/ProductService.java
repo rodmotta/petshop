@@ -4,10 +4,10 @@ import com.github.rodmotta.petshop.clients.AWSS3Client;
 import com.github.rodmotta.petshop.dtos.requests.ProductRequest;
 import com.github.rodmotta.petshop.dtos.responses.ImageResponse;
 import com.github.rodmotta.petshop.dtos.responses.ProductResponse;
-import com.github.rodmotta.petshop.errors.exceptions.NotFoundException;
-import com.github.rodmotta.petshop.persistence.entities.ImageEntity;
-import com.github.rodmotta.petshop.persistence.entities.ProductEntity;
-import com.github.rodmotta.petshop.persistence.repositories.ProductRepository;
+import com.github.rodmotta.petshop.v2.core.shared.exception.NotFoundException;
+import com.github.rodmotta.petshop.v2.adapters.persistence.entity.ImageEntity;
+import com.github.rodmotta.petshop.v2.adapters.persistence.entity.ProductEntity;
+import com.github.rodmotta.petshop.v2.adapters.persistence.repository.jpa.ProductJpaRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,7 +26,7 @@ import static com.github.rodmotta.petshop.dtos.mappers.ProductMapper.requestToEn
 @RequiredArgsConstructor
 public class ProductService {
 
-    private final ProductRepository productRepository;
+    private final ProductJpaRepository productJpaRepository;
     private final AWSS3Client awsS3Client;
 
     @Value("${aws.s3.image-bucket}")
@@ -36,24 +36,24 @@ public class ProductService {
         ProductEntity product = requestToEntity(productRequest);
         product.setCode(UUID.randomUUID());
         product.setLastVersion(true);
-        productRepository.save(product);
+        productJpaRepository.save(product);
     }
 
     @Transactional
     public void updadteProduct(UUID productCode, ProductRequest productRequest) {
-        ProductEntity product = productRepository.findByCodeAndLastVersionTrue(productCode)
+        ProductEntity product = productJpaRepository.findByCodeAndLastVersionTrue(productCode)
                 .orElseThrow(() -> new NotFoundException("Product not found"));
         product.setLastVersion(false);
-        productRepository.save(product);
+        productJpaRepository.save(product);
 
         ProductEntity newProduct = requestToEntity(productRequest);
         newProduct.setCode(productCode);
         newProduct.setLastVersion(true);
-        productRepository.save(newProduct);
+        productJpaRepository.save(newProduct);
     }
 
     public ProductResponse findById(UUID productId) {
-        ProductEntity product = productRepository.findById(productId)
+        ProductEntity product = productJpaRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException("Product not found."));
 
         List<ImageResponse> productImagesResponse = setProductImagesResponse(product);
@@ -63,7 +63,7 @@ public class ProductService {
     public Page<ProductResponse> search(Pageable pageable, String name) {
         Example<ProductEntity> productExample = createProductExample(name);
 
-        Page<ProductEntity> products = productRepository.findAll(productExample, pageable);
+        Page<ProductEntity> products = productJpaRepository.findAll(productExample, pageable);
 
         return products.map(product -> {
             ImageResponse imageResponse = setMainProductImageResponse(product)

@@ -1,12 +1,12 @@
 package com.github.rodmotta.petshop.services;
 
 import com.github.rodmotta.petshop.clients.AWSS3Client;
-import com.github.rodmotta.petshop.errors.exceptions.NotFoundException;
-import com.github.rodmotta.petshop.errors.exceptions.ServiceException;
-import com.github.rodmotta.petshop.persistence.entities.ImageEntity;
-import com.github.rodmotta.petshop.persistence.entities.ProductEntity;
-import com.github.rodmotta.petshop.persistence.repositories.ImageRepository;
-import com.github.rodmotta.petshop.persistence.repositories.ProductRepository;
+import com.github.rodmotta.petshop.v2.core.shared.exception.NotFoundException;
+import com.github.rodmotta.petshop.v2.core.shared.exception.ServiceException;
+import com.github.rodmotta.petshop.v2.adapters.persistence.entity.ImageEntity;
+import com.github.rodmotta.petshop.v2.adapters.persistence.entity.ProductEntity;
+import com.github.rodmotta.petshop.v2.adapters.persistence.repository.jpa.ImageJpaRepository;
+import com.github.rodmotta.petshop.v2.adapters.persistence.repository.jpa.ProductJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -23,8 +23,8 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 public class ImageService {
 
     private final AWSS3Client awsS3Client;
-    private final ImageRepository imageRepository;
-    private final ProductRepository productRepository;
+    private final ImageJpaRepository imageJpaRepository;
+    private final ProductJpaRepository productJpaRepository;
 
     @Value("${spring.profiles.active}")
     private String profile;
@@ -37,7 +37,7 @@ public class ImageService {
             throw new ServiceException("Only images in JPEG or PNG format are accepted.");
         }
 
-        ProductEntity product = productRepository.findById(productId)
+        ProductEntity product = productJpaRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException("Product not found."));
 
         int numberOfImages = product.getImages().size();
@@ -55,6 +55,6 @@ public class ImageService {
                 .url(imageUrl)
                 .position(numberOfImages + 1)
                 .build();
-        imageRepository.save(productImage);
+        imageJpaRepository.save(productImage);
     }
 }

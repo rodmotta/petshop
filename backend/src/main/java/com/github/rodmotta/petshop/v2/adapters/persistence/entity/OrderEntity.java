@@ -1,7 +1,6 @@
 package com.github.rodmotta.petshop.v2.adapters.persistence.entity;
 
-import com.github.rodmotta.petshop.enums.OrderStatus;
-import com.github.rodmotta.petshop.persistence.entities.CustomerEntity;
+import com.github.rodmotta.petshop.v2.core.shared.enums.OrderStatus;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;

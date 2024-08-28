@@ -3,8 +3,8 @@ package com.github.rodmotta.petshop.services;
 import com.github.rodmotta.petshop.clients.ViaCEPClient;
 import com.github.rodmotta.petshop.dtos.responses.AddressResponse;
 import com.github.rodmotta.petshop.dtos.responses.ViaCEPResponse;
-import com.github.rodmotta.petshop.errors.exceptions.NotFoundException;
-import com.github.rodmotta.petshop.errors.exceptions.ServiceException;
+import com.github.rodmotta.petshop.v2.core.shared.exception.NotFoundException;
+import com.github.rodmotta.petshop.v2.core.shared.exception.ServiceException;
 import org.springframework.stereotype.Service;
 
 import static com.github.rodmotta.petshop.dtos.mappers.AddressMapper.viaCEPResponseToResponse;

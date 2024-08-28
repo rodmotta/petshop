@@ -1,8 +1,11 @@
 package com.github.rodmotta.petshop.errors.handler;
 
-import com.github.rodmotta.petshop.errors.exceptions.*;
 import com.github.rodmotta.petshop.dtos.responses.ErrorResponse;
 import com.github.rodmotta.petshop.dtos.responses.ValidationResponse;
+import com.github.rodmotta.petshop.v2.core.shared.exception.ForbiddenException;
+import com.github.rodmotta.petshop.v2.core.shared.exception.NotFoundException;
+import com.github.rodmotta.petshop.v2.core.shared.exception.ServiceException;
+import com.github.rodmotta.petshop.v2.core.shared.exception.UnauthorizedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

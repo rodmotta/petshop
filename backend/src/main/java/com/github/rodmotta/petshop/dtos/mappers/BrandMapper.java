@@ -1,7 +1,7 @@
 package com.github.rodmotta.petshop.dtos.mappers;
 
 import com.github.rodmotta.petshop.dtos.responses.BrandResponse;
-import com.github.rodmotta.petshop.persistence.entities.BrandEntity;
+import com.github.rodmotta.petshop.v2.adapters.persistence.entity.BrandEntity;
 import lombok.NoArgsConstructor;
 
 import static lombok.AccessLevel.PRIVATE;

@@ -1,7 +1,7 @@
 package com.github.rodmotta.petshop.clients;
 
 import com.github.rodmotta.petshop.dtos.responses.ViaCEPResponse;
-import com.github.rodmotta.petshop.errors.exceptions.NotFoundException;
+import com.github.rodmotta.petshop.v2.core.shared.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;

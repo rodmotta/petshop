@@ -1,8 +1,0 @@
-package com.github.rodmotta.petshop.errors.exceptions;
-
-public class NotFoundException extends RuntimeException {
-
-    public NotFoundException(String message) {
-        super(message);
-    }
-}

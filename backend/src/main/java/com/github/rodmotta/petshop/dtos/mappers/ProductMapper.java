@@ -3,7 +3,7 @@ package com.github.rodmotta.petshop.dtos.mappers;
 import com.github.rodmotta.petshop.dtos.requests.ProductRequest;
 import com.github.rodmotta.petshop.dtos.responses.ImageResponse;
 import com.github.rodmotta.petshop.dtos.responses.ProductResponse;
-import com.github.rodmotta.petshop.persistence.entities.ProductEntity;
+import com.github.rodmotta.petshop.v2.adapters.persistence.entity.ProductEntity;
 import lombok.NoArgsConstructor;
 
 import java.util.List;

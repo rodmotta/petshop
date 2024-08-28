@@ -1,9 +1,9 @@
 package com.github.rodmotta.petshop.dtos.mappers;
 
-import com.github.rodmotta.petshop.dtos.requests.AddressRequest;
+import com.github.rodmotta.petshop.v2.adapters.rest.request.AddressRequest;
 import com.github.rodmotta.petshop.dtos.responses.AddressResponse;
 import com.github.rodmotta.petshop.dtos.responses.ViaCEPResponse;
-import com.github.rodmotta.petshop.persistence.entities.AddressEntity;
+import com.github.rodmotta.petshop.v2.adapters.persistence.entity.AddressEntity;
 import lombok.NoArgsConstructor;
 
 import java.util.UUID;

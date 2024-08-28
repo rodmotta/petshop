@@ -2,7 +2,7 @@ package com.github.rodmotta.petshop.dtos.mappers;
 
 import com.github.rodmotta.petshop.dtos.requests.CreateUserRequest;
 import com.github.rodmotta.petshop.dtos.responses.CustomerResponse;
-import com.github.rodmotta.petshop.persistence.entities.CustomerEntity;
+import com.github.rodmotta.petshop.v2.adapters.persistence.entity.CustomerEntity;
 import lombok.NoArgsConstructor;
 
 import java.util.UUID;
