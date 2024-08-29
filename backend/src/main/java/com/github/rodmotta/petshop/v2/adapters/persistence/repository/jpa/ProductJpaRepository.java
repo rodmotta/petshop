@@ -7,5 +7,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ProductJpaRepository extends JpaRepository<ProductEntity, UUID> {
-    Optional<ProductEntity> findByCodeAndLastVersionTrue(UUID productCode);
+    Optional<ProductEntity> findByCodeAndActiveTrue(UUID productCode);
 }

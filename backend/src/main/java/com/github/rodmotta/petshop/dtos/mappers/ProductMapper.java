@@ -17,7 +17,7 @@ public class ProductMapper {
         return ProductEntity.builder()
                 .name(req.name())
                 .price(req.price())
-                .brandId(req.brandId())
+                //.brandId(req.brandId())
                 .build();
     }
 

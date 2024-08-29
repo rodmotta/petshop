@@ -8,6 +8,9 @@ import com.github.rodmotta.petshop.v2.core.address.service.SaveAddress;
 import com.github.rodmotta.petshop.v2.core.address.service.UpdateAddress;
 import com.github.rodmotta.petshop.v2.core.order.port.OrderItemRepositoryPort;
 import com.github.rodmotta.petshop.v2.core.order.service.ShoppingCartService;
+import com.github.rodmotta.petshop.v2.core.product.model.ProductRepository;
+import com.github.rodmotta.petshop.v2.core.product.service.CreateProduct;
+import com.github.rodmotta.petshop.v2.core.product.service.UpdateProduct;
 import com.github.rodmotta.petshop.v2.core.user.model.AuthorizationServer;
 import com.github.rodmotta.petshop.v2.core.user.service.Login;
 import com.github.rodmotta.petshop.v2.core.user.service.Register;
@@ -25,6 +28,16 @@ public class BeanConfig {
     @Bean
     public Register register(AuthorizationServer authorizationServer) {
         return new Register(authorizationServer);
+    }
+
+    @Bean
+    public CreateProduct createProduct(ProductRepository productRepository) {
+        return new CreateProduct(productRepository);
+    }
+
+    @Bean
+    public UpdateProduct updateProduct(ProductRepository productRepository) {
+        return new UpdateProduct(productRepository);
     }
 
     @Bean

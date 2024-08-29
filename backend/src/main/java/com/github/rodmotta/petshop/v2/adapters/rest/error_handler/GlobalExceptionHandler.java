@@ -1,4 +1,4 @@
-package com.github.rodmotta.petshop.errors.handler;
+package com.github.rodmotta.petshop.v2.adapters.rest.error_handler;
 
 import com.github.rodmotta.petshop.dtos.responses.ErrorResponse;
 import com.github.rodmotta.petshop.dtos.responses.ValidationResponse;

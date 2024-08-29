@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,11 +22,11 @@ public class ProductEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id; //id da versao do produto
-    private UUID code; //codigo de busca do produto
-    @Column(nullable = false)
-    private Boolean lastVersion;
-    @Column(nullable = false)
+    private UUID id;
+    private UUID code;
+    private int version;
+    private boolean active;
+    private LocalDateTime createdAt;
     private String name;
     private BigDecimal price;
     @Column(name = "pet_id")
@@ -44,6 +45,6 @@ public class ProductEntity {
     @JoinColumn(name = "category_id", referencedColumnName = "id", insertable = false, updatable = false)
     private CategoryEntity category;
     @ManyToOne(fetch = LAZY, cascade = PERSIST)
-    @JoinColumn(name = "brand_id",  referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "brand_id", referencedColumnName = "id", insertable = false, updatable = false)
     private BrandEntity brand;
 }

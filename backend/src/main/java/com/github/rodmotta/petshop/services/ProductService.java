@@ -35,20 +35,20 @@ public class ProductService {
     public void createProduct(ProductRequest productRequest) {
         ProductEntity product = requestToEntity(productRequest);
         product.setCode(UUID.randomUUID());
-        product.setLastVersion(true);
+        //product.setLastVersion(true);
         productJpaRepository.save(product);
     }
 
     @Transactional
     public void updadteProduct(UUID productCode, ProductRequest productRequest) {
-        ProductEntity product = productJpaRepository.findByCodeAndLastVersionTrue(productCode)
-                .orElseThrow(() -> new NotFoundException("Product not found"));
-        product.setLastVersion(false);
-        productJpaRepository.save(product);
+//        ProductEntity product = productJpaRepository.findByCodeAndLastVersionTrue(productCode)
+//                .orElseThrow(() -> new NotFoundException("Product not found"));
+        //product.setLastVersion(false);
+//        productJpaRepository.save(product);
 
         ProductEntity newProduct = requestToEntity(productRequest);
         newProduct.setCode(productCode);
-        newProduct.setLastVersion(true);
+        //newProduct.setLastVersion(true);
         productJpaRepository.save(newProduct);
     }
 

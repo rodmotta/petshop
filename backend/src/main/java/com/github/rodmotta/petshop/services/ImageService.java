@@ -33,28 +33,28 @@ public class ImageService {
     private String bucket;
 
     public void addImage(UUID productId, MultipartFile image) {
-        if (!Objects.equals(image.getContentType(), IMAGE_PNG_VALUE) && !Objects.equals(image.getContentType(), IMAGE_JPEG_VALUE)) {
-            throw new ServiceException("Only images in JPEG or PNG format are accepted.");
-        }
-
-        ProductEntity product = productJpaRepository.findById(productId)
-                .orElseThrow(() -> new NotFoundException("Product not found."));
-
-        int numberOfImages = product.getImages().size();
-        if (numberOfImages >= 5) throw new ServiceException("The product has already reached the image limit.");
-
-        UUID imageId = UUID.randomUUID();
-        String path = String.format("%s/%s/%s", profile, productId, imageId);
-        awsS3Client.uploadFile(image, bucket, path);
-
-        String imageUrl = awsS3Client.getFileUrl(bucket, path);
-
-        ImageEntity productImage = ImageEntity.builder()
-                .id(imageId)
-                .productId(productId)
-                .url(imageUrl)
-                .position(numberOfImages + 1)
-                .build();
-        imageJpaRepository.save(productImage);
+//        if (!Objects.equals(image.getContentType(), IMAGE_PNG_VALUE) && !Objects.equals(image.getContentType(), IMAGE_JPEG_VALUE)) {
+//            throw new ServiceException("Only images in JPEG or PNG format are accepted.");
+//        }
+//
+//        ProductEntity product = productJpaRepository.findById(productId)
+//                .orElseThrow(() -> new NotFoundException("Product not found."));
+//
+//        int numberOfImages = product.getImages().size();
+//        if (numberOfImages >= 5) throw new ServiceException("The product has already reached the image limit.");
+//
+//        UUID imageId = UUID.randomUUID();
+//        String path = String.format("%s/%s/%s", profile, productId, imageId);
+//        awsS3Client.uploadFile(image, bucket, path);
+//
+//        String imageUrl = awsS3Client.getFileUrl(bucket, path);
+//
+//        ImageEntity productImage = ImageEntity.builder()
+//                .id(imageId)
+//                .productId(productId)
+//                .url(imageUrl)
+//                .position(numberOfImages + 1)
+//                .build();
+//        imageJpaRepository.save(productImage);
     }
 }
